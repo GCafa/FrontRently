@@ -1,45 +1,77 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registrazione Utente</title>
-  <!-- Bootstrap CSS -->
-
-  <!-- Bootstrap Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-
-</head>
-<body>
 <div class="container registration-container">
-  <div class="card">
+  <div class="card registration-form">
     <div class="card-body p-4 p-md-5">
-      <h2 class="text-center mb-4">
-        <i class="bi bi-person-plus-fill"></i> Registrazione
-      </h2>
-
-      <!-- Nome e Cognome -->
-      <div class="mb-3">
-        <label for="firstName" class="form-label">
-          <i class="bi bi-person"></i> Nome
-        </label>
-        <div class="input-group">
-                            <span class="input-group-text">
-                                <i class="bi bi-person-fill"></i>
-                            </span>
-          <input type="text" class="form-control" id="firstName" placeholder="Inserisci il nome" required>
+      <h2 class="text-center mb-4">Registrazione</h2>
+      <form [formGroup]="registerForm" novalidate>
+        <!-- Nome -->
+        <div class="mb-3">
+          <label for="firstName" class="form-label">
+            <i class="bi bi-person"></i> Nome
+          </label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="bi bi-person-fill"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control"
+              id="firstName"
+              formControlName="firstName"
+              [ngClass]="{'is-invalid': submitted && this.f['firstName'].invalid, 'is-valid': submitted && this.f['firstName'].valid}"
+              placeholder="Il tuo nome"
+            />
+          </div>
+          <div *ngIf="submitted && this.f['firstName'].errors" class="text-danger mt-1">
+            <div *ngIf="this.f['firstName'].errors['required']">Il nome è obbligatorio.</div>
+            <div *ngIf="this.f['firstName'].errors['minlength']">Minimo 2 caratteri.</div>
+          </div>
         </div>
 
-
+        <!-- Cognome -->
         <div class="mb-3">
           <label for="lastName" class="form-label">
             <i class="bi bi-person"></i> Cognome
           </label>
           <div class="input-group">
-                            <span class="input-group-text">
-                                <i class="bi bi-person-fill"></i>
-                            </span>
-            <input type="text" class="form-control" id="lastName" placeholder="Inserisci il cognome" required>
+            <span class="input-group-text">
+              <i class="bi bi-person-fill"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control"
+              id="lastName"
+              formControlName="lastName"
+              [ngClass]="{'is-invalid': submitted && this.f['lastName'].invalid, 'is-valid': submitted && this.f['lastName'].valid}"
+              placeholder="Il tuo cognome"
+            />
+          </div>
+          <div *ngIf="submitted && this.f['lastName'].errors" class="text-danger mt-1">
+            <div *ngIf="this.f['lastName'].errors['required']">Il cognome è obbligatorio.</div>
+            <div *ngIf="this.f['lastName'].errors['minlength']">Minimo 2 caratteri.</div>
+          </div>
+        </div>
+
+        <!-- Username -->
+        <div class="mb-3">
+          <label for="username" class="form-label">
+            <i class="bi bi-person"></i> Username
+          </label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="bi bi-person-fill"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control"
+              id="username"
+              formControlName="username"
+              [ngClass]="{'is-invalid': submitted && this.f['username'].invalid, 'is-valid': submitted && this.f['username'].valid}"
+              placeholder="Scegli un username"
+            />
+          </div>
+          <div *ngIf="submitted && this.f['username'].errors" class="text-danger mt-1">
+            <div *ngIf="this.f['username'].errors['required']">L'username è obbligatorio.</div>
+            <div *ngIf="this.f['username'].errors['minlength']">Minimo 2 caratteri.</div>
           </div>
         </div>
 
@@ -49,23 +81,21 @@
             <i class="bi bi-envelope"></i> Email
           </label>
           <div class="input-group">
-                            <span class="input-group-text">
-                                <i class="bi bi-envelope-fill"></i>
-                            </span>
-            <input type="email" class="form-control" id="email" placeholder="Inserisci email" required>
+            <span class="input-group-text">
+              <i class="bi bi-envelope-fill"></i>
+            </span>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              formControlName="email"
+              [ngClass]="{'is-invalid': submitted && this.f['email'].invalid, 'is-valid': submitted && this.f['email'].valid}"
+              placeholder="esempio@dominio.com"
+            />
           </div>
-        </div>
-
-        <!-- Username -->
-        <div class="mb-3">
-          <label for="username" class="form-label">
-            <i class="bi bi-at"></i> Username
-          </label>
-          <div class="input-group">
-                            <span class="input-group-text">
-                                <i class="bi bi-person-badge"></i>
-                            </span>
-            <input type="text" class="form-control" id="username" placeholder="Scegli username" required>
+          <div *ngIf="submitted && this.f['email'].errors" class="text-danger mt-1">
+            <div *ngIf="this.f['email'].errors['required']">L'email è obbligatoria.</div>
+            <div *ngIf="this.f['email'].errors['email']">Formato email non valido.</div>
           </div>
         </div>
 
@@ -75,76 +105,84 @@
             <i class="bi bi-lock"></i> Password
           </label>
           <div class="input-group">
-                            <span class="input-group-text">
-                                <i class="bi bi-lock-fill"></i>
-                            </span>
-            <input type="password" class="form-control" id="password" placeholder="Crea password" required>
-            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-              <i class="bi bi-eye"></i>
-            </button>
+            <span class="input-group-text">
+              <i class="bi bi-lock-fill"></i>
+            </span>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              formControlName="password"
+              [ngClass]="{'is-invalid': submitted && this.f['password'].invalid, 'is-valid': submitted && this.f['password'].valid}"
+              placeholder="Password"
+            />
           </div>
-          <div class="form-text">La password deve contenere almeno 8 caratteri, una lettera maiuscola e un numero</div>
+          <div class="form-text">Minimo 6 caratteri.</div>
+          <div *ngIf="submitted && this.f['password'].errors" class="text-danger mt-1">
+            <div *ngIf="this.f['password'].errors['required']">La password è obbligatoria.</div>
+            <div *ngIf="this.f['password'].errors['minlength']">Minimo 6 caratteri.</div>
+          </div>
         </div>
 
         <!-- Conferma Password -->
         <div class="mb-3">
-          <label for="repeatPassword" class="form-label">
-            <i class="bi bi-shield-lock"></i> Conferma Password
+          <label for="confirmPassword" class="form-label">
+            <i class="bi bi-lock"></i> Conferma Password
           </label>
           <div class="input-group">
-                            <span class="input-group-text">
-                                <i class="bi bi-shield-lock-fill"></i>
-                            </span>
-            <input type="password" class="form-control" id="repeatPassword" placeholder="Conferma password" required>
+            <span class="input-group-text">
+              <i class="bi bi-lock-fill"></i>
+            </span>
+            <input
+              type="password"
+              class="form-control"
+              id="confirmPassword"
+              formControlName="confirmPassword"
+              [ngClass]="{'is-invalid': submitted && (this.f['confirmPassword'].invalid || registerForm.errors?.['passwordsMismatch'])}"
+              placeholder="Ripeti la password"
+            />
+          </div>
+          <div *ngIf="registerForm.errors?.['passwordsMismatch']">Le password non coincidono.</div>
+          <div *ngIf="submitted && (this.f['confirmPassword'].errors || registerForm.errors?.['passwordsMismatch'])" class="text-danger mt-1">
+            <div *ngIf="this.f['confirmPassword'].errors?.['required']">Devi confermare la password.</div>
+            <div *ngIf="registerForm.errors?.['passwordsMismatch']">Le password non coincidono.</div>
           </div>
         </div>
 
-        <!-- Termini e condizioni -->
+        <!-- Accetto Termini -->
         <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="agreeTerms" required>
-          <label class="form-check-label" for="agreeTerms">
-            <i class="bi bi-check2-circle"></i> Accetto i <a href="#">Termini e Condizioni</a> e l'<a href="#">Informativa sulla Privacy</a>
+          <input type="checkbox" class="form-check-input" id="agreeTerms" formControlName="agreeTerms" />
+          <label for="agreeTerms" class="form-check-label">
+            Accetto i <a href="https://commission.europa.eu/protection-your-personal-data_it" target="_blank">termini e condizioni</a>
           </label>
         </div>
-
-        <!-- Bottone Registrati -->
-        <div class="d-grid gap-2 mb-3">
-          <button type="submit" class="btn btn-primary btn-register">
-            <i class="bi bi-box-arrow-in-right"></i> Registrati
-          </button>
+        <div *ngIf="submitted && this.f['agreeTerms'].errors" class="text-danger mb-3">
+          Devi accettare i termini per continuare.
         </div>
 
-        <hr>
-
-        <!-- Hai già un account -->
-        <div class="text-center">
-          <p>
-            <i class="bi bi-question-circle"></i> Hai già un account? <a href="login">Accedi</a>
-          </p>
+        <!-- Messaggi di successo/errore -->
+        <div *ngIf="successMessage" class="alert alert-success mb-3">
+          {{ successMessage }}
         </div>
+        <div *ngIf="errorMessage" class="text-danger mb-3">
+          {{ errorMessage }}
+        </div>
+
+        <!-- Pulsante -->
+        <button
+          type="button"
+          class="btn-register"
+          (click)="onSubmit()"
+        >
+          Registrati
+        </button>
+      </form>
+      <div class="text-center mt-3">
+        <p>
+          Hai già un account?
+          <a routerLink="/login">Accedi</a>
+        </p>
       </div>
     </div>
   </div>
 </div>
-<!-- Bootstrap JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Script per mostrare/nascondere password -->
-<script>
-  document.getElementById('togglePassword').addEventListener('click', function() {
-    const passwordInput = document.getElementById('password');
-    const icon = this.querySelector('i');
-
-    if (passwordInput.type === 'password') {
-      passwordInput.type = 'text';
-      icon.classList.remove('bi-eye');
-      icon.classList.add('bi-eye-slash');
-    } else {
-      passwordInput.type = 'password';
-      icon.classList.remove('bi-eye-slash');
-      icon.classList.add('bi-eye');
-    }
-  });
-</script>
-</body>
-</html>

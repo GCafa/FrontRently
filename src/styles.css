@@ -1,4 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global Styles (src/styles.css) */
+:root {
+  --primary-color: #1B2B38;
+  --light-gray: #f7f7f7;
+  --text-color: #333;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  color: var(--text-color);
+  background: var(--light-gray);
+}

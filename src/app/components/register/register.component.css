@@ -1,5 +1,5 @@
 /* Container principale del form */
-.registration-container {
+.container.registration-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,91 +9,157 @@
 }
 
 /* Card del form */
-.registration-form {
+.card.registration-form {
   background-color: #fff;
-  padding: 2rem 3rem;
+  border: none;
   border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   max-width: 400px;
   width: 100%;
 }
 
+/* Body della card */
+.card-body {
+  padding: 2rem 3rem;
+}
+
 /* Titolo */
-.registration-form h2 {
+h2.text-center.mb-4 {
   margin-bottom: 1.5rem;
   font-size: 1.8rem;
-  text-align: center;
   color: #333;
 }
 
-/* Input group */
-.form-group {
+/* Gruppi di input */
+.mb-3 {
   margin-bottom: 1.2rem;
-  display: flex;
-  flex-direction: column;
 }
 
 /* Etichette */
-.form-group label {
-  margin-bottom: 0.5rem;
+.form-label {
   font-weight: 500;
   color: #444;
 }
 
-/* Input */
-.form-group input {
+/* Input group */
+.input-group {
+  display: flex;
+}
+
+.input-group-text {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-right: none;
+  border-radius: 12px 0 0 12px;
+  padding: 0.75rem 0.9rem;
+  display: flex;
+  align-items: center;
+}
+
+.form-control {
+  flex: 1;
   padding: 0.8rem 1rem;
   border: 1px solid #ccc;
-  border-radius: 12px;
+  border-radius: 0 12px 12px 0;
   font-size: 1rem;
   transition: border-color 0.3s ease;
 }
 
-.form-group input:focus {
+.form-control:focus {
   border-color: #ff5a5f;
   outline: none;
 }
 
+/* validazione */
+.is-invalid {
+  border-color: #dc3545 !important;
+}
+.is-valid {
+  border-color: #28a745 !important;
+}
+
+/* Toggle visibility button */
+#togglePassword {
+  border: 1px solid #ccc;
+  border-left: none;
+  border-radius: 0 12px 12px 0;
+}
+
+/* Hint testo password */
+.form-text {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+/* Messaggi di errore/validità */
+.text-danger {
+  color: #dc3545;
+  font-size: 0.85rem;
+}
+.text-success {
+  color: #28a745;
+  font-size: 0.85rem;
+}
+
+/* Alert success */
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+/* Checkbox termini */
+.form-check .form-check-input {
+  margin-top: 0.3rem;
+}
+
+.form-check-label a {
+  color: #ff5a5f;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.form-check-label a:hover {
+  text-decoration: underline;
+}
+
 /* Bottone di registrazione */
-.register-btn {
+.btn-register {
   margin-top: 1.2rem;
-  padding: 0.9rem 1rem;
   width: 100%;
+  padding: 0.9rem;
   border: none;
   border-radius: 12px;
   background-color: #ff5a5f;
   color: #fff;
   font-size: 1.1rem;
   font-weight: bold;
-  cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.register-btn:hover {
+.btn-register:hover {
   background-color: #e14c4f;
 }
 
 /* Link login */
-.login-link {
-  text-align: center;
-  margin-top: 1rem;
+.text-center p {
   font-size: 0.9rem;
   color: #666;
 }
 
-.login-link a {
+.text-center p a {
   color: #ff5a5f;
   text-decoration: none;
   font-weight: 500;
 }
 
-.login-link a:hover {
+.text-center p a:hover {
   text-decoration: underline;
 }
 
 /* Responsive */
 @media (max-width: 480px) {
-  .registration-form {
+  .card-body {
     padding: 1.5rem 1.5rem;
   }
 }
