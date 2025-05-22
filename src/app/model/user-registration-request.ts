@@ -1,4 +1,4 @@
-export interface BodyRegister {
+export interface UserRegistrationRequest {
   firstname: string;
   lastname: string;
   username: string;

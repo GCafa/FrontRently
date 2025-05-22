@@ -1,101 +1,63 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
-import {NgClass, NgIf} from '@angular/common';
+import { Component } from '@angular/core';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { BodyRegister } from '../../model/body-register';
+import { UserRegistrationRequest } from '../../model/user-registration-request';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    NgClass,
-    HttpClientModule,
-    NgIf
-  ],
   templateUrl: './register.component.html',
+  imports: [
+    ReactiveFormsModule
+  ],
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
-  registerForm!: FormGroup;
+export class RegisterComponent {
+  registerForm: FormGroup;
   submitted = false;
-  successMessage = '';
+  selectedImage?: File;
   errorMessage = '';
+  successMessage = '';
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router
-  ) { }
-
-  ngOnInit(): void {
+  ) {
     this.registerForm = this.fb.group({
-      firstName: ['', [Validators.required, Validators.minLength(2)]],
-      lastName: ['', [Validators.required, Validators.minLength(2)]],
-      username: ['', [Validators.required, Validators.minLength(2)]],
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
+      username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required]],
-      agreeTerms: [false, [Validators.requiredTrue]]
-    }, {
-      validators: this.passwordsMatchValidator
-    });
+      password: ['', Validators.required],
+      repeatPassword: ['', Validators.required]
 
-    // Aggiorna la validazione della conferma password in tempo reale (FIX definitivo)
-    this.registerForm.get('password')?.valueChanges.subscribe(() => {
-      this.registerForm.get('confirmPassword')?.updateValueAndValidity({ onlySelf: true });
-    });
-    this.registerForm.get('confirmPassword')?.valueChanges.subscribe(() => {
-      this.registerForm.get('password')?.updateValueAndValidity({ onlySelf: true });
     });
   }
 
-  // Validator custom per password = conferma password
-  private passwordsMatchValidator(form: FormGroup) {
-    const pw = form.get('password')?.value;
-    const cpw = form.get('confirmPassword')?.value;
-    return pw === cpw ? null : { passwordsMismatch: true };
+  onImageSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) this.selectedImage = file;
   }
-
-  // Getter breve per i controlli del form
-  get f() { return this.registerForm.controls; }
 
   onSubmit(): void {
     this.submitted = true;
-    this.successMessage = '';
-    this.errorMessage = '';
+    if (this.registerForm.invalid) return;
 
-    if (this.registerForm.invalid) {
-      return;
-    }
+    const user: UserRegistrationRequest = this.registerForm.value;
 
-    const payload: BodyRegister = {
-      firstname: this.f['firstName'].value,
-      lastname: this.f['lastName'].value,
-      username: this.f['username'].value,
-      email: this.f['email'].value,
-      password: this.f['password'].value,
-      repeatPassword: this.f['confirmPassword'].value
-    };
-
-    this.authService.register(payload).subscribe({
-      next: (success: boolean) => {
-        if (success) {
+    this.authService.register(user, this.selectedImage)
+      .subscribe({
+        next: (res) => {
           this.successMessage = 'Registrazione avvenuta con successo!';
-          this.registerForm.reset({ agreeTerms: false });
-          this.submitted = false;
-          setTimeout(() => this.router.navigate(['/home']), 1000); // Redirect dopo 1 secondo
-        } else {
-          this.errorMessage = 'Errore durante la registrazione.';
+          this.errorMessage = '';
+          setTimeout(() => this.router.navigate(['/home']), 2000);
+        },
+        error: (err) => {
+          this.errorMessage = err.error?.message || 'Errore di registrazione';
+          this.successMessage = '';
+          setTimeout(() => this.router.navigate(['/login']), 2000);
         }
-      },
-      error: err => {
-        console.error('Registrazione fallita', err);
-        this.errorMessage = err.error?.message || 'Errore durante la registrazione.';
-      }
-    });
+      });
   }
 }
