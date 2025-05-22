@@ -1,1 +1,17 @@
-<p>personal-area works!</p>
+<div class="container mt-4">
+    <div *ngIf="user; else loadingOrError">
+        <h2>Ciao, {{ user.username }}!</h2>
+        <ul>
+            <li><strong>Email:</strong> {{ user.email }}</li>
+            <!-- Altri campi -->
+        </ul>
+    </div>
+    <ng-template #loadingOrError>
+        <div *ngIf="errorMessage; else loading">
+            <div class="alert alert-danger">{{ errorMessage }}</div>
+        </div>
+        <ng-template #loading>
+            <p>Caricamento dati utente...</p>
+        </ng-template>
+    </ng-template>
+</div>

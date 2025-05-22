@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { PasswordResetComponent} from './components/password-reset/password-reset.component';
 import {HomeComponent} from './components/home/home.component';
 import {ChiSiamoComponent} from './components/chi-siamo/chi-siamo.component';
+import {PersonalAreaComponent} from './components/personal-area/personal-area.component';
 
 import {NgModule} from '@angular/core';
 
@@ -28,14 +29,15 @@ export const routes: Routes = [
     path: 'chi-siamo',
     component: ChiSiamoComponent,
   },
-
+  {
+    path: 'personal-area',
+    component: PersonalAreaComponent
+  },
   {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
-  },
-
-
+  }
 ];
 
 
