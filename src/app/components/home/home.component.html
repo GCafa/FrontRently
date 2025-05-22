@@ -1,0 +1,124 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+  <div class="container">
+    <a class="navbar-brand " href="home"><img class="img-fluid" src="../../../assets/loghi/logo-rently.png"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="houses">Case</a></li>
+        <li class="nav-item"><a class="nav-link" href="chi-siamo">Chi siamo</a></li>
+        <li class="nav-item"><a class="nav-link btn btn-primary text-white" href="#">Area Personale</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero d-flex align-items-center">
+  <div class="overlay"></div>
+  <div class="container hero-content">
+    <h1 class="display-4 fw-bold">Trova la tua casa ideale</h1>
+    <p class="lead">Prenota una stanza in pochi clic e goditi il tuo soggiorno.</p>
+    <div class="search-box mt-4">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="data-arrivo" class="form-label">Dove vuoi andare?</label>
+          <input type="text" class="form-control">
+        </div>
+        <div class="col-md-3">
+          <label for="data-arrivo" class="form-label">Data di arrivo</label>
+          <input type="date" class="form-control" id="data-arrivo" name="data-arrivo" required>
+        </div>
+        <div class="col-md-3">
+          <label for="data-partenza" class="form-label">Data di partenza</label>
+          <input type="date" class="form-control" id="data-partenza" name="data-partenza" required>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-primary w-100">Cerca</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Categories -->
+<section class="py-5">
+  <div class="container text-center">
+    <h2 class="mb-4">Tipologie di camere</h2>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="category-card">
+          <i class="bi bi-house fs-1 text-primary"></i>
+          <h5>Camere Standard</h5>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="category-card">
+          <i class="bi bi-building fs-1 text-primary"></i>
+          <h5>Camere Deluxe</h5>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="category-card">
+          <i class="bi bi-sun fs-1 text-primary"></i>
+          <h5>Camere Vista Mare</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Rooms -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <h2 class="mb-4 text-center">Camere in evidenza</h2>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="property-card">
+          <img src="https://source.unsplash.com/400x300/?bedroom" class="w-100">
+          <div class="p-3">
+            <h5>Camera Standard</h5>
+            <p>€80 / notte</p>
+            <button class="btn btn-primary w-100">Prenota</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="property-card">
+          <img src="https://source.unsplash.com/400x300/?hotel" class="w-100">
+          <div class="p-3">
+            <h5>Camera Deluxe</h5>
+            <p>€120 / notte</p>
+            <button class="btn btn-primary w-100">Prenota</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="property-card">
+          <img src="https://source.unsplash.com/400x300/?sea,room" class="w-100">
+          <div class="p-3">
+            <h5>Vista Mare</h5>
+            <p>€150 / notte</p>
+            <button class="btn btn-primary w-100">Prenota</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <p class="nav-link" href="chi_siamo">Chi siamo</p>
+  <p>&copy; 2025 Rently. Tutti i diritti riservati.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>

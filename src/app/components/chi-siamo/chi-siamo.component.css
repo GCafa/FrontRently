@@ -1,0 +1,19 @@
+.body {
+  padding-top: 80px; /* spazio per header fisso */
+}
+.header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  z-index: 1000;
+}
+.header .logo {
+  position: fixed;
+  transform: translateX(-50%);
+}
