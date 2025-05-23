@@ -29,15 +29,18 @@ export const routes: Routes = [
     path: 'chi-siamo',
     component: ChiSiamoComponent,
   },
-  {
-    path: 'personal-area',
-    component: PersonalAreaComponent
-  },
+
   {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
+  },
+
+  {
+    path: 'personal-area',
+    loadComponent: () => import('./components/personal-area/personal-area.component').then(m => m.PersonalAreaComponent)
   }
+
 ];
 
 

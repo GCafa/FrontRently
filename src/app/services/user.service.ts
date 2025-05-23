@@ -4,10 +4,12 @@ import { Observable } from 'rxjs';
 
 // Sostituisci User con la tua interfaccia/modello se ne hai uno
 export interface User {
-  id: number;
+  firstname: string;
+  lastname: string;
   username: string;
   email: string;
-
+  role: string;
+  balance: number;
 }
 
 @Injectable({

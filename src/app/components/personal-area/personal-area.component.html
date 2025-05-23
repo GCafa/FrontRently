@@ -1,17 +1,8 @@
-<div class="container mt-4">
-    <div *ngIf="user; else loadingOrError">
-        <h2>Ciao, {{ user.username }}!</h2>
-        <ul>
-            <li><strong>Email:</strong> {{ user.email }}</li>
-            <!-- Altri campi -->
-        </ul>
-    </div>
-    <ng-template #loadingOrError>
-        <div *ngIf="errorMessage; else loading">
-            <div class="alert alert-danger">{{ errorMessage }}</div>
-        </div>
-        <ng-template #loading>
-            <p>Caricamento dati utente...</p>
-        </ng-template>
-    </ng-template>
+<div class="container mt-4" *ngIf="user">
+  <h2 class="mb-3">Area Personale</h2>
+  <p><strong>Username:</strong> {{ user.username }}</p>
+  <p><strong>Email:</strong> {{ user.email }}</p>
+</div>
+<div *ngIf="errorMessage" class="alert alert-danger mt-3">
+  {{ errorMessage }}
 </div>
