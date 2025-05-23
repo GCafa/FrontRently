@@ -4,12 +4,10 @@ import { Observable } from 'rxjs';
 
 // Sostituisci User con la tua interfaccia/modello se ne hai uno
 export interface User {
-  firstname: string;
-  lastname: string;
+  id: number;
   username: string;
   email: string;
-  role: string;
-  balance: number;
+
 }
 
 @Injectable({
@@ -22,5 +20,9 @@ export class UserService {
 
   getCurrentUser(): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}/me`);
+  }
+
+  updateUser(updatedUser: Partial<User>) {
+    
   }
 }

@@ -71,19 +71,5 @@ export class AuthService {
     localStorage.removeItem(this.tokenKey);
     this.router.navigate(['login']);
   }
-
-
-   * Verifica se esiste un token valido in localStorage
-
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem(this.tokenKey);
-  }
-
-  /**
-   * Ottiene il token di autenticazione
-
-  getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
-  }
-*/
+  */
 }

@@ -5,8 +5,8 @@ import { PasswordResetComponent} from './components/password-reset/password-rese
 import {HomeComponent} from './components/home/home.component';
 import {ChiSiamoComponent} from './components/chi-siamo/chi-siamo.component';
 import {PersonalAreaComponent} from './components/personal-area/personal-area.component';
-
 import {NgModule} from '@angular/core';
+import {UserModifyComponent} from './components/user-modify/user-modify.component';
 
 export const routes: Routes = [
   {
@@ -30,6 +30,10 @@ export const routes: Routes = [
     component: ChiSiamoComponent,
   },
 
+  {
+    path: 'user-modify',
+    component: UserModifyComponent
+  },
   {
     path: '',
     redirectTo: 'home',
