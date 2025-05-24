@@ -1,165 +1,71 @@
-/* Container principale del form */
-.container.registration-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-color: #fefefe;
-  padding: 2rem;
+/* Contenitore centrale */
+.container {
+  margin-top: 50px;
 }
 
-/* Card del form */
-.card.registration-form {
-  background-color: #fff;
-  border: none;
+/* Card personalizzata */
+.card {
   border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  width: 100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+  border: none;
 }
 
-/* Body della card */
-.card-body {
-  padding: 2rem 3rem;
+/* Titolo del form */
+.card h3 {
+  color: #0d6efd;
+  font-weight: 600;
 }
 
-/* Titolo */
-h2.text-center.mb-4 {
-  margin-bottom: 1.5rem;
-  font-size: 1.8rem;
-  color: #333;
-}
-
-/* Gruppi di input */
-.mb-3 {
-  margin-bottom: 1.2rem;
-}
-
-/* Etichette */
-.form-label {
-  font-weight: 500;
-  color: #444;
-}
-
-/* Input group */
-.input-group {
-  display: flex;
-}
-
+/* Input form */
 .input-group-text {
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-right: none;
-  border-radius: 12px 0 0 12px;
-  padding: 0.75rem 0.9rem;
-  display: flex;
-  align-items: center;
+  background-color: #f1f3f5;
+  border: none;
+  border-radius: 0.5rem 0 0 0.5rem;
 }
 
 .form-control {
-  flex: 1;
-  padding: 0.8rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 0 12px 12px 0;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
+  border-left: none;
+  border-radius: 0 0.5rem 0.5rem 0;
+  transition: box-shadow 0.2s;
 }
 
 .form-control:focus {
-  border-color: #ff5a5f;
-  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
 }
 
-/* validazione */
-.is-invalid {
-  border-color: #dc3545 !important;
-}
-.is-valid {
-  border-color: #28a745 !important;
-}
-
-/* Toggle visibility button */
-#togglePassword {
-  border: 1px solid #ccc;
-  border-left: none;
-  border-radius: 0 12px 12px 0;
-}
-
-/* Hint testo password */
-.form-text {
-  font-size: 0.85rem;
-  color: #666;
-  margin-top: 0.25rem;
-}
-
-/* Messaggi di errore/validità */
-.text-danger {
-  color: #dc3545;
-  font-size: 0.85rem;
-}
-.text-success {
-  color: #28a745;
-  font-size: 0.85rem;
-}
-
-/* Alert success */
-.alert-success {
-  background-color: #d4edda;
-  color: #155724;
-}
-
-/* Checkbox termini */
-.form-check .form-check-input {
-  margin-top: 0.3rem;
-}
-
-.form-check-label a {
-  color: #ff5a5f;
-  text-decoration: none;
+/* Pulsante submit */
+.btn-primary {
+  border-radius: 8px;
   font-weight: 500;
-}
-
-.form-check-label a:hover {
-  text-decoration: underline;
-}
-
-/* Bottone di registrazione */
-.btn-register {
-  margin-top: 1.2rem;
-  width: 100%;
-  padding: 0.9rem;
-  border: none;
-  border-radius: 12px;
-  background-color: #ff5a5f;
-  color: #fff;
-  font-size: 1.1rem;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.btn-register:hover {
-  background-color: #e14c4f;
+  padding: 10px;
+  font-size: 1rem;
 }
 
 /* Link login */
-.text-center p {
-  font-size: 0.9rem;
-  color: #666;
-}
-
-.text-center p a {
-  color: #ff5a5f;
-  text-decoration: none;
+a.text-decoration-none {
+  color: #0d6efd;
   font-weight: 500;
+  transition: color 0.2s;
 }
 
-.text-center p a:hover {
+a.text-decoration-none:hover {
+  color: #084298;
   text-decoration: underline;
 }
-
-/* Responsive */
-@media (max-width: 480px) {
-  .card-body {
-    padding: 1.5rem 1.5rem;
-  }
+.auth-background {
+  height: 100%;
+  background-image: url('/assets/images/img.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Rendi la card leggibile sopra l'immagine */
+.card {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }

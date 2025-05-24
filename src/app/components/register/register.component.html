@@ -1,12 +1,106 @@
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
-  <input type="text" formControlName="firstname" placeholder="Nome" />
-  <input type="text" formControlName="lastname" placeholder="Cognome" />
-  <input type="text" formControlName="username" placeholder="Username" />
-  <input type="email" formControlName="email" placeholder="Email" />
-  <input type="password" formControlName="password" placeholder="Password" />
-  <input type="password" formControlName="repeatPassword" placeholder="<Repeat password>" />
-  <input type="file" (change)="onImageSelected($event)" />
-  <button type="submit">Registrati</button>
-  <div *ngIf="errorMessage">{{ errorMessage }}</div>
-  <div *ngIf="successMessage">{{ successMessage }}</div>
-</form>
+<div class="auth-background">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8">
+        <div class="card registration-form shadow">
+          <div class="card-body p-4 p-md-5">
+            <h3 class="text-center mb-4">
+              <i class="bi bi-person-plus-fill me-2"></i>Registrazione
+            </h3>
+
+            <!-- ALERT MESSAGGI -->
+            <div *ngIf="errorMessage" class="alert alert-danger">
+              {{ errorMessage }}
+            </div>
+            <div *ngIf="successMessage" class="alert alert-success">
+              {{ successMessage }}
+            </div>
+
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate enctype="multipart/form-data">
+              <!-- Nome -->
+              <div class="mb-3">
+                <label for="firstname" class="form-label">Nome</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-person"></i></span>
+                  <input type="text" id="firstname" class="form-control"
+                         formControlName="firstname" placeholder="Mario" />
+                </div>
+              </div>
+
+              <!-- Cognome -->
+              <div class="mb-3">
+                <label for="lastname" class="form-label">Cognome</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-person-vcard"></i></span>
+                  <input type="text" id="lastname" class="form-control"
+                         formControlName="lastname" placeholder="Rossi" />
+                </div>
+              </div>
+
+              <!-- Username -->
+              <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-person-circle"></i></span>
+                  <input type="text" id="username" class="form-control"
+                         formControlName="username" placeholder="username" />
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                  <input type="email" id="email" class="form-control"
+                         formControlName="email" placeholder="esempio@email.com" />
+                </div>
+              </div>
+
+              <!-- Password -->
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                  <input type="password" id="password" class="form-control"
+                         formControlName="password" placeholder="••••••••" />
+                </div>
+              </div>
+
+              <!-- Conferma Password -->
+              <div class="mb-3">
+                <label for="repeatPassword" class="form-label">Conferma Password</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                  <input type="password" id="repeatPassword" class="form-control"
+                         formControlName="repeatPassword" placeholder="••••••••" />
+                </div>
+              </div>
+
+              <!-- Immagine profilo -->
+              <div class="mb-3">
+                <label for="image" class="form-label">Foto profilo (opzionale)</label>
+                <input type="file"
+                       id="image"
+                       accept="image/*"
+                       (change)="onImageSelected($event)"
+                       class="form-control" />
+              </div>
+
+              <!-- Pulsante -->
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Registrati</button>
+              </div>
+
+              <!-- Link login -->
+              <p class="text-center mt-3 mb-0">
+                Hai già un account?
+                <a routerLink="/login" class="text-decoration-none">Accedi</a>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

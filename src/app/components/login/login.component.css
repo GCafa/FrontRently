@@ -19,8 +19,8 @@
   padding: 2rem 3rem;
   border-radius: 16px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-  max-width: 400px;
-  width: 100%;
+  max-width: 300px;
+  width: 200%;
 }
 
 /* Titolo */
@@ -94,6 +94,18 @@
 
 .register-link a:hover {
   text-decoration: underline;
+}
+
+
+.auth-background {
+  background-image: url('/assets/images/img.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Responsive */
