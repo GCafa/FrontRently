@@ -51,7 +51,7 @@ export class RegisterComponent {
         next: (res) => {
           this.successMessage = 'Registrazione avvenuta con successo!';
           this.errorMessage = '';
-          setTimeout(() => this.router.navigate(['/home']), 2000);
+          setTimeout(() => this.router.navigate(['/login']), 2000);
         },
         error: (err) => {
           this.errorMessage = err.error?.message || 'Errore di registrazione';

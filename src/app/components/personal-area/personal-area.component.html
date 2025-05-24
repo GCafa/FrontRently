@@ -1,8 +1,73 @@
-<div class="container mt-4" *ngIf="user">
-  <h2 class="mb-3">Area Personale</h2>
-  <p><strong>Username:</strong> {{ user.username }}</p>
-  <p><strong>Email:</strong> {{ user.email }}</p>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+      <div class="card personal-area-glass animate__animated animate__fadeInDown">
+        <div class="card-body text-center p-5">
+          <!-- Avatar con immagine se esiste, altrimenti iniziale -->
+          <div class="avatar-circle mx-auto mb-3">
+          <ng-container *ngIf="user.imageUrl; else showInitials">
+            <img [src]="getUserImageUrl()" alt="Avatar" class="avatar-img" />
+          </ng-container>
+          <ng-template #showInitials>
+    <span class="avatar-initials">
+      {{ user?.username ? user.username.charAt(0).toUpperCase() : '?' }}
+    </span>
+          </ng-template>
+        </div>
+
+
+
+          <h2 class="mb-2 text-primary">
+            <i class="bi bi-person-circle me-2"></i>Area Personale
+          </h2>
+          <p class="mb-4 text-muted">Benvenuto nella tua area riservata!</p>
+
+          <div *ngIf="user">
+            <div class="row mb-3">
+              <div class="col-5 text-end fw-bold text-secondary">Nome:</div>
+              <div class="col-7 text-start user-field">{{ user.firstname }}</div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-5 text-end fw-bold text-secondary">Cognome:</div>
+              <div class="col-7 text-start user-field">{{ user.lastname}}</div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-5 text-end fw-bold text-secondary">Username:</div>
+              <div class="col-7 text-start user-field">{{ user.username }}</div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-5 text-end fw-bold text-secondary">Email:</div>
+              <div class="col-7 text-start user-field">{{ user.email }}</div>
+            </div>
+            <div class="d-flex justify-content-center gap-3">
+              <a class="btn btn-outline-primary px-4" href="">
+                <i class="bi bi-pencil"></i> Storico Prenotazioni
+              </a>
+
+
+            <!-- Ruolo o altro campo
+            <div class="row mb-4">
+              <div class="col-5 text-end fw-bold text-secondary">Ruolo:</div>
+              <div class="col-7 text-start user-field">{{ user.role || '-' }}</div>
+            </div>
+            -->
+            <div class="d-flex justify-content-center gap-3">
+              <a class="btn btn-outline-primary px-4" href="/user-modify">
+                <i class="bi bi-pencil"></i> Modifica Profilo
+              </a>
+
+              <button class="btn btn-outline-danger px-4" (click)="logout()">
+                <i class="bi bi-box-arrow-right"></i> Logout
+              </button>
+            </div>
+          </div>
+
+          <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+            <i class="bi bi-exclamation-triangle-fill"></i> {{ errorMessage }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<div *ngIf="errorMessage" class="alert alert-danger mt-3">
-  {{ errorMessage }}
 </div>

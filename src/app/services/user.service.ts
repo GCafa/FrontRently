@@ -4,9 +4,13 @@ import { Observable } from 'rxjs';
 
 // Sostituisci User con la tua interfaccia/modello se ne hai uno
 export interface User {
+
   id: number;
   username: string;
   email: string;
+  firstname: string;
+  lastname: string;
+  imageUrl: string;
 
 }
 
@@ -23,6 +27,6 @@ export class UserService {
   }
 
   updateUser(updatedUser: Partial<User>) {
-    
+
   }
 }
