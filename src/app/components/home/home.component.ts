@@ -1,35 +1,33 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import {RouterModule} from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule],
   templateUrl: './home.component.html',
+  imports: [
+    RouterModule
+  ],
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
-  rooms = [
-    { title: 'Camera Standard', price: 80, image: 'https://source.unsplash.com/400x300/?bedroom' },
-    { title: 'Camera Deluxe', price: 120, image: 'https://source.unsplash.com/400x300/?hotel' },
-    { title: 'Vista Mare', price: 150, image: 'https://source.unsplash.com/400x300/?sea,room' }
+export class HomeComponent implements OnInit, OnDestroy {
+  images = [
+    'assets/images/img01.jpg',
+    'assets/images/img02.jpg',
+    'assets/images/img03.jpg',
+    'assets/images/img04.jpg',
+    'assets/images/img05.jpg'
   ];
+  currentIndex = 0;
+  intervalId: any;
 
-  sidebarCollapsed = false;
-
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) {}
-
-  toggleSidebar(): void {
-    this.sidebarCollapsed = !this.sidebarCollapsed;
+  ngOnInit(): void {
+    this.intervalId = setInterval(() => {
+      this.currentIndex = (this.currentIndex + 1) % this.images.length;
+    }, 2500); // ogni 2,5 secondi cambia immagine
   }
 
-  /*logout(): void {
-    this.authService.logout();
-    this.router.navigate(['/login']);
-  }*/
+  ngOnDestroy(): void {
+    clearInterval(this.intervalId);
+  }
 }

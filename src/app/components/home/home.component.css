@@ -1,178 +1,35 @@
-:root {
-  --primary-color: #1B2B38;
-  --secondary-color: #00a699;
-  --dark-gray: #333;
-  --light-gray: #f7f7f7;
-}
-
-.body {
-  font-family: 'Arial', sans-serif;
-  color: var(--dark-gray);
-  background-color: var(--light-gray);
-}
-
-.navbar-brand {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #1B2B38 !important;
-}
-
-.hero {
-  background: url('https://source.unsplash.com/1600x900/?hotel,room') center/cover no-repeat;
-  height: 70vh;
-  color: white;
-  display: flex;
-  align-items: center;
-  text-align: center;
+.carousel-wrapper {
   position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
 }
 
-.overlay {
+.carousel-bg {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-}
-
-.hero-content {
-  position: relative;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: background-image 1s ease-in-out;
   z-index: 1;
 }
 
-.search-box {
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Imposta il colore blu per le etichette dei campi data */
-.search-box label[for="data-arrivo"],
-.search-box label[for="data-partenza"] {
-  color: #1B2B38;
-}
-
-.btn-primary {
-  background: #1B2B38;
-  border: none;
-  padding: 10px 20px;
-}
-
-.category-card {
-  text-align: center;
-  padding: 20px;
-  border-radius: 10px;
-  background: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
-}
-
-.category-card:hover {
-  transform: translateY(-5px);
-}
-
-.property-card {
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
-}
-
-.property-card:hover {
-  transform: translateY(-5px);
-}
-
-.footer {
-  background: var(--dark-gray);
+/* ✅ overlay deve essere sopra */
+.overlay-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
   color: white;
-  padding: 40px 0;
   text-align: center;
-}
-
-.navbar-brand {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #1B2B38 !important;
-}
-
-.hero {
-  background: url('https://source.unsplash.com/1600x900/?hotel,room') center/cover no-repeat;
-  height: 70vh;
-  color: white;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  text-align: center;
-  position: relative;
-}
-
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-}
-
-.search-box {
-  background: white;
-  border-radius: 12px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+  background-color: rgba(0, 0, 0, 0.3); /* facoltativo, ma utile per visibilità */
   padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Imposta il colore blu per le etichette dei campi data */
-.search-box label[for="data-arrivo"],
-.search-box label[for="data-partenza"] {
-  color: #1B2B38;
-}
-
-.btn-primary {
-  background: #1B2B38;
-  border: none;
-  padding: 10px 20px;
-}
-
-.category-card {
-  text-align: center;
-  padding: 20px;
-  border-radius: 10px;
-  background: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
-}
-
-.category-card:hover {
-  transform: translateY(-5px);
-}
-
-.property-card {
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
-}
-
-.property-card:hover {
-  transform: translateY(-5px);
-}
-
-.footer {
-  background: var(--dark-gray);
-  color: white;
-  padding: 40px 0;
-  text-align: center;
-}
-
-.img-fluid {
-  width: 30%;
-  height: 30%;
-  position: static;
 }
