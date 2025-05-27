@@ -52,7 +52,7 @@ export class LoginComponent {
         next: (res) => {
           if (res && res.jwt) {
             localStorage.setItem('token', res.jwt);
-            this.router.navigate(['/home']);
+            this.router.navigate(['/personal-area']);
           } else {
             this.errorMessage = 'Errore nella risposta del server';
           }

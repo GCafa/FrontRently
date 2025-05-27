@@ -1,24 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { UserModifyRequest } from '../model/user-modify-request';
+import { UserModifyResponse } from '../model/user-modify-response';
+import { User } from '../model/user';
 
-// Sostituisci User con la tua interfaccia/modello se ne hai uno
-export interface User {
-
-  id: number;
-  username: string;
-  email: string;
-  firstname: string;
-  lastname: string;
-  imageUrl: string;
-
-}
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class UserService {
-  private apiUrl = 'http://localhost:8080/api/v1/user'; // metti qui il tuo base URL
+  private apiUrl = 'http://localhost:8080/api/v1/user';
 
   constructor(private http: HttpClient) {}
 
@@ -26,7 +15,7 @@ export class UserService {
     return this.http.get<User>(`${this.apiUrl}/me`);
   }
 
-  updateUser(updatedUser: Partial<User>) {
-
+  updateUser(request: UserModifyRequest): Observable<UserModifyResponse> {
+    return this.http.put<UserModifyResponse>(`${this.apiUrl}/me`, request);
   }
 }

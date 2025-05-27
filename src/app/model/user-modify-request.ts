@@ -1,8 +1,7 @@
-export interface User {
-  id: number;
+export interface UserModifyRequest {
   username: string;
   email: string;
   firstname: string;
   lastname: string;
-  imageUrl: string;
+  password: string;
 }

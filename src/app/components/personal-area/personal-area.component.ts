@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UserService, User } from '../../services/user.service';
+import { UserService } from '../../services/user.service';
+import { User } from '../../model/user';
 import { Router } from '@angular/router';
 
 @Component({
@@ -27,23 +28,16 @@ export class PersonalAreaComponent implements OnInit {
     });
   }
 
-  // Funzione che restituisce l’URL dell’immagine
   getUserImageUrl(): string {
     if (!this.user?.imageUrl) {
-      // Fallback: immagine di default servita dal backend
       return 'http://localhost:8080/api/v1/user/image/defaultProfileImage.png';
     }
-    // Se imageUrl contiene già un URL assoluto, puoi fare un controllo più smart qui!
     return 'http://localhost:8080/api/v1/user/image/' + this.user.imageUrl;
   }
 
   logout() {
-    // Cancella il token JWT/localStorage, secondo come salvi il login
-    localStorage.removeItem('token'); // Se usi localStorage
-    sessionStorage.removeItem('token'); // Se usi sessionStorage
-    // Eventuale altro cleanup...
-
-    // Redirect alla pagina di login (o home)
+    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     this.router.navigate(['/login']);
   }
 }
