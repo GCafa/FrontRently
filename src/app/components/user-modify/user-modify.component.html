@@ -6,9 +6,10 @@
           <i class="bi bi-pencil-square me-2"></i> Modifica Profilo
         </h2>
 
+        <!-- Avatar + input file -->
         <div class="text-center mb-4">
           <div class="avatar-circle mx-auto">
-            <ng-container *ngIf="user.imageUrl; else showInitials">
+            <ng-container *ngIf="user?.imageUrl; else showInitials">
               <img [src]="getUserImageUrl()" alt="Avatar" class="avatar-img" />
             </ng-container>
             <ng-template #showInitials>
@@ -17,8 +18,16 @@
               </span>
             </ng-template>
           </div>
+          <!-- Input per selezionare nuova immagine -->
+          <input
+            type="file"
+            (change)="onImageSelected($event)"
+            accept="image/*"
+            class="form-control mt-2"
+          />
         </div>
 
+        <!-- FORM -->
         <form [formGroup]="modifyForm" (ngSubmit)="onSubmit()" *ngIf="user; else loading" novalidate>
           <div *ngIf="errorMessage" class="alert alert-danger mb-3">
             <i class="bi bi-exclamation-triangle"></i> {{ errorMessage }}
@@ -52,25 +61,14 @@
           </div>
 
           <div class="mb-3">
-            <label for="firstname" class="form-label">Nome</label>
-            <input type="text"
-                   id="firstname"
+            <label for="password" class="form-label">Password</label>
+            <input type="password"
+                   id="password"
                    class="form-control"
-                   formControlName="firstname"
-                   [ngClass]="{'is-invalid': submitted && f['firstname']?.invalid, 'is-valid': submitted && f['firstname']?.valid}">
-            <div *ngIf="submitted && f['firstname']?.invalid" class="invalid-feedback">
-              Inserisci il nome.
-            </div>
-          </div>
-          <div class="mb-3">
-            <label for="lastname" class="form-label">Cognome</label>
-            <input type="text"
-                   id="lastname"
-                   class="form-control"
-                   formControlName="lastname"
-                   [ngClass]="{'is-invalid': submitted && f['lastname']?.invalid, 'is-valid': submitted && f['lastname']?.valid}">
-            <div *ngIf="submitted && f['lastname']?.invalid" class="invalid-feedback">
-              Inserisci il cognome.
+                   formControlName="password"
+                   [ngClass]="{'is-invalid': submitted && f['password'].invalid, 'is-valid': submitted && f['password'].valid}">
+            <div *ngIf="submitted && f['password'].invalid" class="invalid-feedback">
+              Inserisci la password.
             </div>
           </div>
 

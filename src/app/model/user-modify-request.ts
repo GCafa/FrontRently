@@ -4,4 +4,5 @@ export interface UserModifyRequest {
   firstname: string;
   lastname: string;
   password: string;
+  imageUrl: string;
 }
