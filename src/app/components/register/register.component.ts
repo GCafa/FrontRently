@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { UserRegistrationRequest } from '../../model/user-registration-request';
@@ -9,7 +10,8 @@ import {Router, RouterModule} from '@angular/router';
   templateUrl: './register.component.html',
   imports: [
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    CommonModule
   ],
   styleUrls: ['./register.component.css']
 })
