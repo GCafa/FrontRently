@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule, NgClass } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import {Router, RouterModule} from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { UserLoginRequest } from '../../model/user-login-request';
 
 @Component({
   selector: 'app-login',
@@ -20,15 +21,20 @@ export class LoginComponent {
   loginForm: FormGroup;
   errorMessage = '';
   submitted = false;
+  loading = false;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router
   ) {
+    this.initForm();
+  }
+
+  private initForm(): void {
     this.loginForm = this.fb.group({
-      usernameOrEmail: ['', Validators.required],
-      password: ['', Validators.required]
+      usernameOrEmail: ['', [Validators.required, Validators.minLength(3)]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
@@ -38,29 +44,97 @@ export class LoginComponent {
 
   onSubmit(): void {
     this.submitted = true;
-    if (this.loginForm.invalid) return;
+    this.errorMessage = '';
 
-    // Prendi valore inserito
-    const usernameOrEmail = this.loginForm.value.usernameOrEmail;
-    const password = this.loginForm.value.password;
+    if (this.loginForm.invalid) {
+      return;
+    }
 
-    // Passa sempre il campo come "username", sia che sia email sia che sia username
-    const credentials = { username: usernameOrEmail, password: password };
+    this.loading = true;
+    const credentials: UserLoginRequest = {
+      username: this.loginForm.value.usernameOrEmail,
+      password: this.loginForm.value.password
+    };
 
-    this.authService.login(credentials)
-      .subscribe({
-        next: (res) => {
-          if (res && res.jwt) {
-            localStorage.setItem('token', res.jwt);
-            this.router.navigate(['/personal-area']);
+    this.authService.login(credentials).subscribe({
+      next: (res) => {
+        console.log('Risposta login:', res); // Debug
+
+        if (res?.jwt) {
+          const payload = this.parseJwt(res.jwt);
+          console.log('Payload JWT:', payload); // Debug
+          console.log('Ruolo trovato:', payload?.role); // Debug
+
+          if (payload?.role) {
+            // Salva esplicitamente il ruolo
+            localStorage.setItem('userRole', payload.role);
+            console.log('Ruolo salvato:', localStorage.getItem('userRole')); // Debug
+
+            this.navigateByRole(payload.role);
           } else {
-            this.errorMessage = 'Errore nella risposta del server';
+            this.errorMessage = 'Ruolo utente non trovato nel token';
+            console.error('Payload senza ruolo:', payload);
           }
-        },
-        error: (err) => {
-          this.errorMessage = err.error?.message || 'Credenziali non valide';
+        } else {
+          this.errorMessage = 'Token non valido nella risposta';
         }
-      });
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Errore login:', err);
+        this.errorMessage = err.error?.message || 'Credenziali non valide';
+        this.loading = false;
+      }
+    });
   }
 
+  private navigateByRole(role: string): void {
+    console.log('Navigazione per ruolo:', role); // Debug
+
+    const routes: { [key: string]: string } = {
+      'ADMIN': '/admin',           // Corretto i percorsi
+      'MODERATOR': '/personal-area',
+      'HOST': '/personal-area',
+      'CLIENT': '/user-home'
+    };
+
+    const route = routes[role];
+    console.log('Route selezionata:', route); // Debug
+
+    if (route) {
+      const finalUrl = `${window.location.origin}${route}`;
+      console.log('Reindirizzamento a:', finalUrl); // Debug
+      window.location.href = finalUrl;
+    } else {
+      console.error('Ruolo non riconosciuto:', role);
+      this.router.navigate(['/home']);
+    }
+  }
+
+  private parseJwt(token: string): any {
+    if (!token) {
+      console.error('Token vuoto');
+      return null;
+    }
+
+    try {
+      const base64Url = token.split('.')[1];
+      if (!base64Url) {
+        console.error('Token malformato');
+        return null;
+      }
+
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(c =>
+        '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+      ).join(''));
+
+      const payload = JSON.parse(jsonPayload);
+      console.log('JWT decodificato:', payload); // Debug
+      return payload;
+    } catch (e) {
+      console.error('Errore nel parsing del JWT:', e);
+      return null;
+    }
+  }
 }

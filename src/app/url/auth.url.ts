@@ -1,4 +1,4 @@
-import {baseUrl} from './base.url';
+import { baseUrl } from './base.url';
 
 export class AuthUrl {
   private static baseUrl = baseUrl + '/auth';
@@ -6,6 +6,7 @@ export class AuthUrl {
   public static register(): string {
     return this.baseUrl + '/register';
   }
+
   public static login(): string {
     return this.baseUrl + '/login';
   }
