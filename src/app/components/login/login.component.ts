@@ -19,6 +19,7 @@ import { UserLoginRequest } from '../../model/user-login-request';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  showPassword = false;
   errorMessage = '';
   submitted = false;
   loading = false;
@@ -29,6 +30,10 @@ export class LoginComponent {
     private router: Router
   ) {
     this.initForm();
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
   private initForm(): void {

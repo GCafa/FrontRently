@@ -1,20 +1,32 @@
 <!-- NAVBAR FISSA -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
-  <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/">Rently</a>
-    <div class="d-flex ms-auto">
-      <a class="btn btn-primary me-2" routerLink="/chi-siamo">Chi siamo</a>
-      <a class="btn btn-outline-primary me-2" routerLink="/login">Login</a>
-      <a class="btn btn-primary" routerLink="/register">Registrati</a>
+<div class="main-content">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="/">Rently</a>
+      <div class="d-flex ms-auto">
+        <a class="btn btn-primary me-2" routerLink="/chi-siamo">Chi siamo</a>
+        <a class="btn btn-outline-primary me-2" routerLink="/login">Login</a>
+        <a class="btn btn-primary" routerLink="/register">Registrati</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CAROUSEL BACKGROUND E OVERLAY -->
+  <div class="carousel-wrapper">
+    <div class="carousel-bg" [style.backgroundImage]="'url(' + images[currentIndex] + ')'"></div>
+    <div class="overlay-content">
+      <h1>Benvenuto su Rently</h1>
+      <p>La tua piattaforma per prenotazioni turistiche</p>
     </div>
   </div>
-</nav>
 
-<!-- CAROUSEL BACKGROUND E OVERLAY -->
-<div class="carousel-wrapper">
-  <div class="carousel-bg" [style.backgroundImage]="'url(' + images[currentIndex] + ')'"></div>
-  <div class="overlay-content">
-    <h1>Benvenuto su Rently</h1>
-    <p>La tua piattaforma per prenotazioni turistiche</p>
-  </div>
+  <footer class="custom-footer">
+    <div class="footer-links">
+      <a routerLink="/chi-siamo">Chi siamo</a>
+    </div>
+    <div class="footer-copyright">
+      © 2024 Rently. Tutti i diritti riservati.
+    </div>
+  </footer>
+
 </div>

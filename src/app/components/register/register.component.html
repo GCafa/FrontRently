@@ -1,14 +1,13 @@
 <div class="auth-background">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-6 col-md-8">
+  <div class="container container-left">
+    <div class="row">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
         <div class="card registration-form shadow">
           <div class="card-body p-4 p-md-5">
-            <h3 class="text-center mb-4">
+            <h3 class="text-left mb-4">
               <i class="bi bi-person-plus-fill me-2"></i>Registrazione
             </h3>
 
-            <!-- ALERT MESSAGGI -->
             <div *ngIf="errorMessage" class="alert alert-danger">
               {{ errorMessage }}
             </div>
@@ -23,7 +22,11 @@
                 <div class="input-group">
                   <span class="input-group-text"><i class="bi bi-person"></i></span>
                   <input type="text" id="firstname" class="form-control"
+                         [ngClass]="{'is-invalid': submitted && registerForm.get('firstname')?.errors}"
                          formControlName="firstname" placeholder="Mario" />
+                </div>
+                <div *ngIf="submitted && registerForm.get('firstname')?.errors" class="invalid-feedback d-block">
+                  <div *ngIf="registerForm.get('firstname')?.errors?.['required']">Il nome è obbligatorio</div>
                 </div>
               </div>
 
@@ -33,7 +36,11 @@
                 <div class="input-group">
                   <span class="input-group-text"><i class="bi bi-person-vcard"></i></span>
                   <input type="text" id="lastname" class="form-control"
+                         [ngClass]="{'is-invalid': submitted && registerForm.get('lastname')?.errors}"
                          formControlName="lastname" placeholder="Rossi" />
+                </div>
+                <div *ngIf="submitted && registerForm.get('lastname')?.errors" class="invalid-feedback d-block">
+                  <div *ngIf="registerForm.get('lastname')?.errors?.['required']">Il cognome è obbligatorio</div>
                 </div>
               </div>
 
@@ -43,7 +50,11 @@
                 <div class="input-group">
                   <span class="input-group-text"><i class="bi bi-person-circle"></i></span>
                   <input type="text" id="username" class="form-control"
+                         [ngClass]="{'is-invalid': submitted && registerForm.get('username')?.errors}"
                          formControlName="username" placeholder="username" />
+                </div>
+                <div *ngIf="submitted && registerForm.get('username')?.errors" class="invalid-feedback d-block">
+                  <div *ngIf="registerForm.get('username')?.errors?.['required']">Lo username è obbligatorio</div>
                 </div>
               </div>
 
@@ -53,7 +64,12 @@
                 <div class="input-group">
                   <span class="input-group-text"><i class="bi bi-envelope"></i></span>
                   <input type="email" id="email" class="form-control"
+                         [ngClass]="{'is-invalid': submitted && registerForm.get('email')?.errors}"
                          formControlName="email" placeholder="esempio@email.com" />
+                </div>
+                <div *ngIf="submitted && registerForm.get('email')?.errors" class="invalid-feedback d-block">
+                  <div *ngIf="registerForm.get('email')?.errors?.['required']">L'email è obbligatoria</div>
+                  <div *ngIf="registerForm.get('email')?.errors?.['email']">Inserisci un'email valida</div>
                 </div>
               </div>
 
@@ -62,8 +78,15 @@
                 <label for="password" class="form-label">Password</label>
                 <div class="input-group">
                   <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                  <input type="password" id="password" class="form-control"
+                  <input [type]="showPassword ? 'text' : 'password'" id="password" class="form-control"
+                         [ngClass]="{'is-invalid': submitted && registerForm.get('password')?.errors}"
                          formControlName="password" placeholder="••••••••" />
+                  <button class="btn btn-outline-secondary" type="button" (click)="togglePassword()">
+                    <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+                  </button>
+                </div>
+                <div *ngIf="submitted && registerForm.get('password')?.errors" class="invalid-feedback d-block">
+                  <div *ngIf="registerForm.get('password')?.errors?.['required']">La password è obbligatoria</div>
                 </div>
               </div>
 
@@ -72,8 +95,16 @@
                 <label for="repeatPassword" class="form-label">Conferma Password</label>
                 <div class="input-group">
                   <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-                  <input type="password" id="repeatPassword" class="form-control"
+                  <input [type]="showPassword ? 'text' : 'password'" id="repeatPassword" class="form-control"
+                         [ngClass]="{'is-invalid': submitted && registerForm.get('repeatPassword')?.errors}"
                          formControlName="repeatPassword" placeholder="••••••••" />
+                  <button class="btn btn-outline-secondary" type="button" (click)="togglePassword()">
+                    <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+                  </button>
+                </div>
+                <div *ngIf="submitted && registerForm.get('repeatPassword')?.errors" class="invalid-feedback d-block">
+                  <div *ngIf="registerForm.get('repeatPassword')?.errors?.['required']">La conferma password è obbligatoria</div>
+                  <div *ngIf="registerForm.get('repeatPassword')?.errors?.['passwordMismatch']">Le password non coincidono</div>
                 </div>
               </div>
 
@@ -93,7 +124,7 @@
               </div>
 
               <!-- Link login -->
-              <p class="text-center mt-3 mb-0">
+              <p class="text-left mt-3 mb-0">
                 Hai già un account?
                 <a routerLink="/login" class="text-decoration-none">Accedi</a>
               </p>

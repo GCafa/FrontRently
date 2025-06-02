@@ -17,6 +17,7 @@ import {Router, RouterModule} from '@angular/router';
 })
 export class RegisterComponent {
   registerForm: FormGroup;
+  showPassword = false;
   submitted = false;
   selectedImage?: File;
   errorMessage = '';
@@ -36,6 +37,10 @@ export class RegisterComponent {
       repeatPassword: ['', Validators.required]
 
     });
+  }
+
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
   }
 
   onImageSelected(event: any): void {
