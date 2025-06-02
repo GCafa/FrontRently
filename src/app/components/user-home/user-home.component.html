@@ -1,0 +1,74 @@
+<div class="container-fluid p-0">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+    <div class="container">
+      <a class="navbar-brand" routerLink="/"><i class="bi bi-house-door"></i> Rently</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" routerLink="/show_home">Case</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/chi-siamo">Chi siamo</a></li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-primary" routerLink="/personal-area">Area Personale</a>
+          </li>
+          <li class="nav-item ms-2">
+            <button class="btn btn-outline-danger" (click)="logout()">
+              <i class="bi bi-box-arrow-left"></i> Logout
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section con Slideshow -->
+  <section class="hero">
+    <!-- Slides -->
+    <div class="slide active" style="background-image: url('assets/images/resort.png')"></div>
+    <div class="slide" style="background-image: url('assets/images/capitale.png')"></div>
+    <div class="slide" style="background-image: url('assets/images/chalet.png')"></div>
+
+    <!-- Overlay scuro -->
+    <div class="overlay"></div>
+
+    <!-- Contenuto hero -->
+    <div class="container hero-content">
+      <h1 class="display-4 fw-bold">Trova la tua casa ideale</h1>
+      <p class="lead">Prenota una stanza in pochi clic e goditi il tuo soggiorno.</p>
+      <div class="search-box mt-4">
+        <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+          <div class="row g-2">
+            <div class="col-12 col-md-4">
+              <label for="destination" class="form-label">Dove vuoi andare?</label>
+              <input type="text" class="form-control" id="destination" formControlName="destination">
+            </div>
+            <div class="col-12 col-md-3">
+              <label for="arrivalDate" class="form-label">Data di arrivo</label>
+              <input type="date" class="form-control" id="arrivalDate" formControlName="arrivalDate">
+            </div>
+            <div class="col-12 col-md-3">
+              <label for="departureDate" class="form-label">Data di partenza</label>
+              <input type="date" class="form-control" id="departureDate" formControlName="departureDate">
+            </div>
+            <div class="col-12 col-md-2 d-flex align-items-end">
+              <button type="submit" class="btn btn-primary w-100" [disabled]="!searchForm.valid">Cerca</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="d-flex justify-content-center gap-3">
+        <a class="text-white text-decoration-none" routerLink="/chi-siamo">Chi siamo</a>
+        <span class="text-white">|</span>
+        <a class="text-white text-decoration-none" routerLink="/privacy">Privacy Policy</a>
+      </div>
+      <p class="mt-2 mb-0">&copy; 2025 Rently. Tutti i diritti riservati.</p>
+    </div>
+  </footer>
+</div>

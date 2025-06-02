@@ -1,0 +1,96 @@
+
+:root {
+  --primary-color: #1B2B38;
+  --secondary-color: #00a699;
+  --dark-gray: #333;
+  --light-gray: #f7f7f7;
+}
+
+:host {
+  display: block;
+  font-family: 'Arial', sans-serif;
+  color: var(--dark-gray);
+  background-color: var(--light-gray);
+}
+
+/* Hero Section con Slideshow */
+.hero {
+  position: relative;
+  height: 70vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex: 1;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  color: white;
+  text-align: center;
+  width: 100%;
+}
+
+.container-fluid {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.navbar .btn-primary {
+  color: white !important;
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+
+.navbar .nav-link.btn-primary {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  color: white !important;
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+
+.navbar .nav-link.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.footer {
+  background: var(--primary-color);
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+  width: 100%;
+  margin-top: auto;
+}
+
+.footer a:hover {
+  text-decoration: underline !important;
+}

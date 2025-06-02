@@ -16,11 +16,11 @@ export class UserService {
   }
 
   updateUser(formData: FormData): Observable<UserModifyResponse> {
-    return this.http.post<UserModifyResponse>(`${this.apiUrl}/me/modify`, formData);
+    return this.http.post<UserModifyResponse>(`${this.apiUrl}/modify`, formData);
   }
 
   changePassword(passwordData: BodyChangePassword): Observable<any> {
-    return this.http.post(`${this.apiUrl}/me/change-password`, passwordData, {
+    return this.http.post(`${this.apiUrl}/change-password`, passwordData, {
       headers: this.getAuthHeaders()
     });
   }
