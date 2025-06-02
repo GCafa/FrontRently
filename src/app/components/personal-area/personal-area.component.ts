@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { User } from '../../model/user';
-import {RouterModule} from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-personal-area',
@@ -16,7 +16,10 @@ export class PersonalAreaComponent implements OnInit {
   loading = true;
   errorMessage = '';
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.userService.getCurrentUser().subscribe({
@@ -39,6 +42,13 @@ export class PersonalAreaComponent implements OnInit {
 
   logout() {
     localStorage.removeItem('token');
-    location.reload();
+    localStorage.removeItem('role');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('role');
+
+    this.router.navigate(['/home'])
+      .then(() => {
+        location.reload();
+      });
   }
 }

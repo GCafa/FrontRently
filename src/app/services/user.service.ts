@@ -12,15 +12,25 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getCurrentUser(): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/me`);
+    return this.http.get<User>(`${this.apiUrl}/me`, {
+      headers: this.getAuthHeaders()
+    });
   }
 
   updateUser(formData: FormData): Observable<UserModifyResponse> {
-    return this.http.post<UserModifyResponse>(`${this.apiUrl}/modify`, formData);
+    return this.http.post<UserModifyResponse>(`${this.apiUrl}/modify`, formData, {
+      headers: this.getAuthHeaders()
+    });
   }
 
   changePassword(passwordData: BodyChangePassword): Observable<any> {
-    return this.http.post(`${this.apiUrl}/change-password`, passwordData, {
+    const requestBody = {
+      currentPassword: passwordData.currentPassword,
+      newPassword: passwordData.newPassword,
+      repeatNewPassword: passwordData.repeatNewPassword // Aggiungiamo automaticamente repeatPassword
+    };
+
+    return this.http.post(`${this.apiUrl}/change-password`, requestBody, {
       headers: this.getAuthHeaders()
     });
   }
