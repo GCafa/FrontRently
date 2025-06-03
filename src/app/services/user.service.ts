@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { UserModifyResponse } from '../model/user-modify-response';
+import {CustomResponse} from '../model/custom-response';
 import { User } from '../model/user';
-import { BodyChangePassword } from '../model/body-change-password';
-import {ChangeRoleRequest} from '../model/change-role-request';
+import{UserPasswordChangeRequest} from '../model/user-password-change-request';
+import{ ChangeRoleRequest } from '../model/change-role-request';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -18,13 +18,13 @@ export class UserService {
     });
   }
 
-  updateUser(formData: FormData): Observable<UserModifyResponse> {
-    return this.http.post<UserModifyResponse>(`${this.apiUrl}/modify`, formData, {
+  updateUser(formData: FormData): Observable<CustomResponse> {
+    return this.http.post<CustomResponse>(`${this.apiUrl}/modify`, formData, {
       headers: this.getAuthHeaders()
     });
   }
 
-  changePassword(passwordData: BodyChangePassword): Observable<any> {
+  changePassword(passwordData: UserPasswordChangeRequest): Observable<any> {
     const requestBody = {
       currentPassword: passwordData.currentPassword,
       newPassword: passwordData.newPassword,

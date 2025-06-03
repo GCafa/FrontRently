@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../services/user.service';
-import { BodyChangePassword } from '../../model/body-change-password';
+import { UserPasswordChangeRequest } from '../../model/user-password-change-request';
 
 @Component({
   selector: 'app-change-password',
@@ -14,7 +14,7 @@ import { BodyChangePassword } from '../../model/body-change-password';
   imports: [CommonModule, FormsModule]
 })
 export class ChangePasswordComponent {
-  passwordData: BodyChangePassword = {
+  passwordData: UserPasswordChangeRequest= {
     currentPassword: '',
     newPassword: '',
     repeatNewPassword: ''

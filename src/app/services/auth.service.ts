@@ -2,12 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { AuthUrl } from '../url/auth.url';
-import { BodyLogin } from '../model/body-login';
-import { BodyChangePassword } from '../model/body-change-password';
-import { BodyHouses } from '../model/body-houses';
+import { UserLoginResponse } from '../model/user-login-response';
+import { UserPasswordChangeRequest } from '../model/user-password-change-request';
 import { UserRegistrationRequest } from '../model/user-registration-request';
 import { UserLoginRequest } from '../model/user-login-request';
-import { UserLoginResponse } from '../model/user-login-response';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -85,21 +83,11 @@ export class AuthService {
     }
   }
 
-  passwordReset(body: BodyChangePassword): Observable<boolean> {
+  passwordReset(body: UserPasswordChangeRequest): Observable<boolean> {
     return this.http.post<{message: string}>(AuthUrl.passwordReset(), body).pipe(
       map(response => true),
       catchError((err: HttpErrorResponse) => {
         console.error('Errore reset password:', err);
-        return of(false);
-      })
-    );
-  }
-
-  houses(body: BodyHouses): Observable<boolean> {
-    return this.http.post<{message: string}>(AuthUrl.houses(), body).pipe(
-      map(response => true),
-      catchError((err: HttpErrorResponse) => {
-        console.error('Errore houses:', err);
         return of(false);
       })
     );

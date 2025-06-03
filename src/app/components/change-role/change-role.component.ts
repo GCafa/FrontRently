@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
-import { ChangeRoleRequest } from '../../model/change-role-request';
 
 @Component({
   selector: 'app-change-role',

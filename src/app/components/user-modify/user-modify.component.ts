@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
-import { UserModifyResponse } from '../../model/user-modify-response';
+import { CustomResponse } from '../../model/custom-response';
 import { User } from '../../model/user';
 import { NgClass } from '@angular/common';
 import { CommonModule } from '@angular/common';
@@ -81,7 +81,7 @@ export class UserModifyComponent implements OnInit {
 
     // CHIAMA POST su /modify NON PUT su /me!
     this.userService.updateUser(formData).subscribe({
-      next: (resp: UserModifyResponse) => {
+      next: (resp: CustomResponse) => {
         this.successMessage = 'Profilo aggiornato con successo!';
         setTimeout(() => this.router.navigate(['/personal-area']), 1200);
       },
