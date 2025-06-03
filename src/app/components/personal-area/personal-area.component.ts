@@ -15,6 +15,7 @@ export class PersonalAreaComponent implements OnInit {
   user?: User;
   loading = true;
   errorMessage = '';
+  userRole: string;
 
   constructor(
     private userService: UserService,
@@ -40,6 +41,7 @@ export class PersonalAreaComponent implements OnInit {
     }
   }
 
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
@@ -50,5 +52,9 @@ export class PersonalAreaComponent implements OnInit {
       .then(() => {
         location.reload();
       });
+  }
+
+  requestChangeRole() {
+
   }
 }

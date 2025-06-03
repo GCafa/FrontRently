@@ -1,0 +1,22 @@
+<div class="admin-container">
+  <h2>Gestione Richieste Cambio Ruolo</h2>
+
+  <div class="requests-list" *ngIf="roleRequests.length > 0; else noRequests">
+    <div class="request-card" *ngFor="let request of roleRequests">
+      <div class="request-info">
+        <p><strong>Utente:</strong> {{request.username}}</p>
+        <p><strong>Ruolo attuale:</strong> {{request.currentRole}}</p>
+        <p><strong>Ruolo richiesto:</strong> {{request.requestedRole}}</p>
+        <p><strong>Data richiesta:</strong> {{request.requestDate | date:'dd/MM/yyyy HH:mm'}}</p>
+      </div>
+      <div class="action-buttons">
+        <button class="approve-btn" (click)="approveRequest(request.id)">Approva</button>
+        <button class="reject-btn" (click)="rejectRequest(request.id)">Rifiuta</button>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noRequests>
+    <p class="no-requests">Non ci sono richieste di cambio ruolo pendenti.</p>
+  </ng-template>
+</div>

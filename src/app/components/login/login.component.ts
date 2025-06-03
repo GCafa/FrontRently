@@ -94,27 +94,29 @@ export class LoginComponent {
   }
 
   private navigateByRole(role: string): void {
-    console.log('Navigazione per ruolo:', role); // Debug
+    // Normalizza: togli prefisso ROLE_, spazi, lowercase → uppercase
+    const normalizedRole = role.replace(/^ROLE_/, '').trim().toUpperCase();
 
     const routes: { [key: string]: string } = {
-      'ADMIN': '/admin',           // Corretto i percorsi
+      'ADMIN': '/admin-home',
       'MODERATOR': '/personal-area',
       'HOST': '/personal-area',
       'CLIENT': '/user-home'
     };
 
-    const route = routes[role];
-    console.log('Route selezionata:', route); // Debug
+    console.log('Ruolo originale:', role);
+    console.log('Ruolo normalizzato:', normalizedRole);
+    console.log('Route selezionata:', routes[normalizedRole]);
 
+    const route = routes[normalizedRole];
     if (route) {
-      const finalUrl = `${window.location.origin}${route}`;
-      console.log('Reindirizzamento a:', finalUrl); // Debug
-      window.location.href = finalUrl;
+      window.location.href = `${window.location.origin}${route}`;
     } else {
-      console.error('Ruolo non riconosciuto:', role);
       this.router.navigate(['/home']);
     }
   }
+
+
 
   private parseJwt(token: string): any {
     if (!token) {

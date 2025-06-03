@@ -1,24 +1,23 @@
 <div class="container py-5">
-  <div class="row justify-content-center">
+  <div class="row">
     <div class="col-lg-6 col-md-8">
       <div class="card personal-area-glass animate__animated animate__fadeInDown">
-        <div class="card-body text-center p-5">
-          <div class="avatar-circle mx-auto mb-3">
+        <div class="card-body p-5">
+          <div class="avatar-circle mb-3">
             <img [src]="user?.imageUrl"
                  (error)="onImageError()"
                  alt="Foto profilo"
                  class="profile-image"
                  *ngIf="!loading && user?.imageUrl">
-
             <div class="no-image" *ngIf="!loading && !user?.imageUrl">
               <span>Nessuna immagine profilo</span>
             </div>
           </div>
 
-          <h2 class="mb-2 text-primary">
+          <h2 class="mb-2 text-primary text-start">
             <i class="bi bi-person-circle me-2"></i>Area Personale
           </h2>
-          <p class="mb-4 text-muted">Benvenuto nella tua area riservata!</p>
+          <p class="mb-4 text-muted text-start">Benvenuto nella tua area riservata!</p>
 
           <div *ngIf="user">
             <div class="row mb-3">
@@ -38,7 +37,7 @@
               <div class="col-7 text-start user-field">{{ user.email }}</div>
             </div>
 
-            <div class="d-flex justify-content-center gap-3">
+            <div class="d-flex flex-wrap gap-3 mb-3">
               <a class="btn btn-outline-primary px-4" href="">
                 <i class="bi bi-clock"></i> Storico Prenotazioni
               </a>
@@ -50,6 +49,12 @@
               </a>
               <button class="btn btn-outline-danger px-4" (click)="logout()">
                 <i class="bi bi-box-arrow-right"></i> Logout
+              </button>
+            </div>
+
+            <div class="mt-3" *ngIf="userRole !== 'HOST'">
+              <button class="btn btn-success" routerLink="/change-role">
+                <i class="bi bi-house-heart"></i> Vuoi diventare un Host? Clicca qui per richiederlo!
               </button>
             </div>
           </div>

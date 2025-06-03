@@ -1,0 +1,89 @@
+.card {
+  transition: transform 0.2s;
+  background: linear-gradient(to bottom right, #ffffff, #f8f9fa);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.form-control {
+  border: 1px solid #dee2e6;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+textarea {
+  resize: none;
+  font-size: 0.95rem;
+}
+
+.btn-primary {
+  background: linear-gradient(to right, #007bff, #0056b3);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover:not([disabled]) {
+  background: linear-gradient(to right, #0056b3, #004085);
+  transform: translateY(-2px);
+}
+
+.btn-outline-secondary {
+  transition: all 0.3s ease;
+}
+
+.btn-outline-secondary:hover {
+  transform: translateX(-5px);
+}
+
+.alert {
+  border-left: 4px solid;
+  animation: slideIn 0.3s ease;
+}
+
+.alert-success {
+  border-left-color: #28a745;
+}
+
+.alert-danger {
+  border-left-color: #dc3545;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bi {
+  vertical-align: -0.125em;
+}
+
+h2 {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.text-muted {
+  font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+  .card {
+    margin: 0 10px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+}
