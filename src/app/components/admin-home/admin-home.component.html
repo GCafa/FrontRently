@@ -1,22 +1,124 @@
-<div class="admin-container">
-  <h2>Gestione Richieste Cambio Ruolo</h2>
+<div class="container mt-4">
+    <h1 class="mb-4">Pannello Amministrazione</h1>
 
-  <div class="requests-list" *ngIf="roleRequests.length > 0; else noRequests">
-    <div class="request-card" *ngFor="let request of roleRequests">
-      <div class="request-info">
-        <p><strong>Utente:</strong> {{request.username}}</p>
-        <p><strong>Ruolo attuale:</strong> {{request.currentRole}}</p>
-        <p><strong>Ruolo richiesto:</strong> {{request.requestedRole}}</p>
-        <p><strong>Data richiesta:</strong> {{request.requestDate | date:'dd/MM/yyyy HH:mm'}}</p>
-      </div>
-      <div class="action-buttons">
-        <button class="approve-btn" (click)="approveRequest(request.id)">Approva</button>
-        <button class="reject-btn" (click)="rejectRequest(request.id)">Rifiuta</button>
-      </div>
+    <!-- Informazioni utente corrente -->
+    <div class="card mb-4" *ngIf="currentUser">
+        <div class="card-header">
+            <h2 class="h5 mb-0">Utente Corrente</h2>
+        </div>
+        <div class="card-body">
+            <p class="mb-2"><strong>Username:</strong> {{currentUser.username}}</p>
+            <p class="mb-2"><strong>Email:</strong> {{currentUser.email}}</p>
+            <p class="mb-0"><strong>Ruolo:</strong> {{currentUser.role}}</p>
+        </div>
     </div>
-  </div>
 
-  <ng-template #noRequests>
-    <p class="no-requests">Non ci sono richieste di cambio ruolo pendenti.</p>
-  </ng-template>
+    <!-- Lista degli utenti -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="h5 mb-0">Gestione Utenti</h2>
+        </div>
+        <div class="card-body">
+            <div class="text-center" *ngIf="loading">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Caricamento...</span>
+                </div>
+            </div>
+
+            <div class="table-responsive" *ngIf="!loading && users.length > 0">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Ruolo</th>
+                        <th>Stato</th>
+                        <th>Azioni</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let user of users">
+                        <td>{{user.id}}</td>
+                        <td>{{user.username}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.role}}</td>
+                        <td>
+                                <span class="badge" [ngClass]="{'bg-success': user.isActive, 'bg-danger': !user.isActive}">
+                                    {{getUserStatusText(user.isActive)}}
+                                </span>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-success me-1" *ngIf="!user.isActive" (click)="enableUser(user.id)">
+                                Abilita
+                            </button>
+                            <button class="btn btn-sm btn-danger" *ngIf="user.isActive" (click)="disableUser(user.id)">
+                                Disabilita
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="alert alert-info" *ngIf="!loading && users.length === 0">
+                Nessun utente trovato
+            </div>
+        </div>
+    </div>
+
+    <!-- Sezione richieste cambio ruolo -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="h5 mb-0">Richieste Cambio Ruolo</h2>
+        </div>
+        <div class="card-body">
+            <div class="list-group" *ngIf="changeRoleRequests.length > 0">
+                <div class="list-group-item" *ngFor="let request of changeRoleRequests">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1">Richiesta da: {{request.username}}</h6>
+                            <p class="mb-1">Nuovo ruolo: {{request.newRole}}</p>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-success btn-sm" (click)="acceptChangeRole(request.id)">
+                                Accetta
+                            </button>
+                            <button class="btn btn-danger btn-sm" (click)="showRejectionDialog(request.id)">
+                                Rifiuta
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-info" *ngIf="changeRoleRequests.length === 0">
+                Nessuna richiesta di cambio ruolo pendente
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal per rifiuto richiesta -->
+    <div class="modal" [class.show]="showRejectionForm" [style.display]="showRejectionForm ? 'block' : 'none'">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Motivo del rifiuto</h5>
+                    <button type="button" class="btn-close" (click)="cancelRejection()"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="rejectionMotivation" class="form-label">Inserisci la motivazione:</label>
+                        <textarea id="rejectionMotivation" class="form-control" rows="3"
+                                  [(ngModel)]="rejectionMotivation"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="cancelRejection()">Annulla</button>
+                    <button type="button" class="btn btn-primary" (click)="rejectChangeRole()">Conferma</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop fade show" *ngIf="showRejectionForm"></div>
 </div>

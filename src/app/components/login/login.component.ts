@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { UserLoginRequest } from '../../model/user-login-request';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -63,17 +64,23 @@ export class LoginComponent {
 
     this.authService.login(credentials).subscribe({
       next: (res) => {
-        console.log('Risposta login:', res); // Debug
+        console.log('Risposta login:', res);
+
+        // Controlla prima se l'utente è attivo
+        if (res?.user?.isActive === false) {
+          this.errorMessage = 'Account disabilitato. Contatta l\'amministratore per maggiori informazioni.';
+          this.loading = false;
+          return;
+        }
 
         if (res?.jwt) {
           const payload = this.parseJwt(res.jwt);
-          console.log('Payload JWT:', payload); // Debug
-          console.log('Ruolo trovato:', payload?.role); // Debug
+          console.log('Payload JWT:', payload);
+          console.log('Ruolo trovato:', payload?.role);
 
           if (payload?.role) {
-            // Salva esplicitamente il ruolo
             localStorage.setItem('userRole', payload.role);
-            console.log('Ruolo salvato:', localStorage.getItem('userRole')); // Debug
+            console.log('Ruolo salvato:', localStorage.getItem('userRole'));
 
             this.navigateByRole(payload.role);
           } else {

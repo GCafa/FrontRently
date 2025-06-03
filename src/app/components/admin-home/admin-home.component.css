@@ -1,49 +1,145 @@
-.admin-container {
-  padding: 20px;
+/* Stili generali */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.requests-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.request-card {
-  border: 1px solid #ddd;
-  padding: 15px;
-  border-radius: 8px;
-  background-color: #fff;
+/* Personalizzazione card */
+.card {
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease;
 }
 
-.request-info {
-  margin-bottom: 15px;
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
-.action-buttons {
-  display: flex;
-  gap: 10px;
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid rgba(0,0,0,0.125);
 }
 
-button {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+/* Stili tabella */
+.table-responsive {
+  margin-bottom: 1rem;
 }
 
-.approve-btn {
-  background-color: #4CAF50;
-  color: white;
+.table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  vertical-align: middle;
 }
 
-.reject-btn {
-  background-color: #f44336;
-  color: white;
+.table td {
+  vertical-align: middle;
 }
 
-.no-requests {
-  text-align: center;
-  color: #666;
-  font-style: italic;
+/* Badge personalizzati */
+.badge {
+  padding: 0.5em 0.8em;
+  font-weight: 500;
+}
+
+/* Bottoni */
+.btn-group .btn {
+  margin: 0 2px;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* Modal personalizzato */
+.modal-content {
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.modal-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.modal-footer {
+  background-color: #f8f9fa;
+  border-top: 1px solid #dee2e6;
+}
+
+/* Spinner di caricamento */
+.spinner-border {
+  width: 2rem;
+  height: 2rem;
+  margin: 2rem 0;
+}
+
+/* List group personalizzato */
+.list-group-item {
+  transition: background-color 0.2s ease;
+}
+
+.list-group-item:hover {
+  background-color: #f8f9fa;
+}
+
+/* Form controls */
+.form-control:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .btn-group .btn {
+    width: 100%;
+    margin: 0;
+  }
+
+  .table {
+    font-size: 0.875rem;
+  }
+
+  .card-body {
+    padding: 1rem;
+  }
+}
+
+/* Effetti hover */
+.btn:hover {
+  transform: translateY(-1px);
+  transition: transform 0.2s ease;
+}
+
+/* Animazioni */
+.modal.show {
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-backdrop.show {
+  opacity: 0.5;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Utilità */
+.mb-4 {
+  margin-bottom: 1.5rem !important;
+}
+
+.text-center {
+  text-align: center !important;
 }
