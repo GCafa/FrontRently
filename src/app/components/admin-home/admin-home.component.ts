@@ -4,13 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
 import { User } from '../../model/user';
 import { CustomResponse} from "../../model/custom-response";
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin-home.component.html',
   styleUrls: ['./admin-home.component.css'],
   standalone: true,
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, RouterModule]
 })
 export class AdminHomeComponent implements OnInit {
   currentUser: User | null = null;
@@ -21,7 +22,7 @@ export class AdminHomeComponent implements OnInit {
   rejectionMotivation = '';
   selectedRequestId: number | null = null;
 
-  constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService, private router: Router) { }
 
   ngOnInit(): void {
     this.loading = true;
@@ -41,8 +42,8 @@ export class AdminHomeComponent implements OnInit {
     });
   }
 
-  getUserStatusText(enabled: boolean): string {
-    return enabled ? 'Attivo' : 'Disabilitato';
+  getUserStatusText(isActive: boolean): string {
+    return isActive ? 'Abilitato' : 'Disabilitato';
   }
 
   enableUser(userId: number): void {
@@ -56,6 +57,7 @@ export class AdminHomeComponent implements OnInit {
   }
 
   disableUser(userId: number): void {
+    console.log(`disableUser chiamato con userId: ${userId}`);
     this.adminService.disableUser(userId).subscribe({
       next: () => {
         this.loadUsers();
@@ -64,7 +66,6 @@ export class AdminHomeComponent implements OnInit {
       error: () => this.handleError('Errore durante la disabilitazione dell\'utente')
     });
   }
-
   acceptChangeRole(requestId: number): void {
     this.adminService.acceptChangeRole(requestId).subscribe({
       next: () => {
@@ -108,5 +109,16 @@ export class AdminHomeComponent implements OnInit {
   private handleError(error: string): void {
     console.error('Errore:', error);
     // Implementare la logica per mostrare gli errori
+  }
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('role');
+
+    this.router.navigate(['/home'])
+      .then(() => {
+        location.reload();
+      });
   }
 }

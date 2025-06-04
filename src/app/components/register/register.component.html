@@ -85,8 +85,13 @@
                     <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
                   </button>
                 </div>
-                <div *ngIf="submitted && registerForm.get('password')?.errors" class="invalid-feedback d-block">
-                  <div *ngIf="registerForm.get('password')?.errors?.['required']">La password è obbligatoria</div>
+                <div *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || submitted)">
+                  <small class="text-danger" *ngIf="registerForm.get('password')?.errors?.['required']">
+                    La password è obbligatoria.
+                  </small>
+                  <small class="text-danger" *ngIf="registerForm.get('password')?.errors?.['pattern']">
+                    La password deve contenere almeno 8 caratteri, una maiuscola, una minuscola, un numero e un carattere speciale.
+                  </small>
                 </div>
               </div>
 

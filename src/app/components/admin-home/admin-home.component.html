@@ -49,13 +49,11 @@
                                 </span>
                         </td>
                         <td>
-                            <button class="btn btn-sm btn-success me-1" *ngIf="!user.isActive" (click)="enableUser(user.id)">
-                                Abilita
-                            </button>
-                            <button class="btn btn-sm btn-danger" *ngIf="user.isActive" (click)="disableUser(user.id)">
-                                Disabilita
-                            </button>
-                        </td>
+                      <td>
+                        <button *ngIf="!user.isActive" (click)="enableUser(user.id)">Abilita</button>
+                        <button *ngIf="user.isActive" (click)="disableUser(user.id)">Disabilita</button>
+                      </td>
+
                     </tr>
                     </tbody>
                 </table>
@@ -121,4 +119,8 @@
         </div>
     </div>
     <div class="modal-backdrop fade show" *ngIf="showRejectionForm"></div>
+
+  <button class="btn btn-outline-danger px-4" (click)="logout()">
+    <i class="bi bi-box-arrow-right"></i> Logout
+  </button>
 </div>

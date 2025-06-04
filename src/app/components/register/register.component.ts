@@ -33,11 +33,18 @@ export class RegisterComponent {
       lastname: ['', Validators.required],
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/)
+        ]
+      ],
       repeatPassword: ['', Validators.required]
-
     });
   }
+
+
 
   togglePassword(): void {
     this.showPassword = !this.showPassword;
@@ -47,8 +54,20 @@ export class RegisterComponent {
     const file = event.target.files[0];
     if (file) this.selectedImage = file;
   }
+  // Dentro RegisterComponent
+
+  passwordsMatch(): boolean {
+    const password = this.registerForm.get('password')?.value;
+    const repeatPassword = this.registerForm.get('repeatPassword')?.value;
+    return password === repeatPassword;
+  }
 
   onSubmit(): void {
+    this.submitted = true;
+    if (this.registerForm.invalid || !this.passwordsMatch()) {
+      this.errorMessage = 'Le password non coincidono';
+      return;
+    }
     this.submitted = true;
     if (this.registerForm.invalid) return;
 

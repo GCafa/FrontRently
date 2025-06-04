@@ -64,40 +64,38 @@ export class LoginComponent {
 
     this.authService.login(credentials).subscribe({
       next: (res) => {
-        console.log('Risposta login:', res);
-
-        // Controlla prima se l'utente è attivo
         if (res?.user?.isActive === false) {
-          this.errorMessage = 'Account disabilitato. Contatta l\'amministratore per maggiori informazioni.';
-          this.loading = false;
+          this.setError('Account disabilitato. Contatta l\'amministratore.');
           return;
         }
 
         if (res?.jwt) {
           const payload = this.parseJwt(res.jwt);
-          console.log('Payload JWT:', payload);
-          console.log('Ruolo trovato:', payload?.role);
-
           if (payload?.role) {
             localStorage.setItem('userRole', payload.role);
-            console.log('Ruolo salvato:', localStorage.getItem('userRole'));
-
             this.navigateByRole(payload.role);
           } else {
-            this.errorMessage = 'Ruolo utente non trovato nel token';
-            console.error('Payload senza ruolo:', payload);
+            this.setError('Ruolo utente non trovato nel token');
           }
         } else {
-          this.errorMessage = 'Token non valido nella risposta';
+          this.setError('Token non valido nella risposta');
         }
         this.loading = false;
       },
       error: (err) => {
-        console.error('Errore login:', err);
-        this.errorMessage = err.error?.message || 'Credenziali non valide';
+        if (err.error?.message?.toLowerCase().includes('disabilitato')) {
+          this.setError('Account disabilitato. Contatta l\'amministratore.');
+        } else {
+          this.setError('Credenziali non valide');
+        }
         this.loading = false;
       }
     });
+  }
+
+  private setError(message: string): void {
+    this.errorMessage = message;
+    this.loading = false;
   }
 
   private navigateByRole(role: string): void {

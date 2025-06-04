@@ -36,6 +36,9 @@ export class AuthService {
     return this.http.post<UserLoginResponse>(AuthUrl.login(), credentials)
       .pipe(
         tap(response => {
+          if (response.user && response.user.isActive === false) {
+            throw new Error('Account disabilitato');
+          }
           if (response.jwt) {
             localStorage.setItem('token', response.jwt);
             const payload = this.parseJwt(response.jwt);
@@ -44,7 +47,11 @@ export class AuthService {
             }
           }
         }),
-        catchError((error: HttpErrorResponse) => {
+        catchError((error: any) => {
+          if (error.message === 'Account disabilitato') {
+            // Gestisci il messaggio di errore nel componente
+            throw error;
+          }
           console.error('Errore login:', error);
           throw error;
         })
