@@ -22,6 +22,7 @@ export class RegisterComponent {
   selectedImage?: File;
   errorMessage = '';
   successMessage = '';
+  loading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -72,6 +73,16 @@ export class RegisterComponent {
     if (this.registerForm.invalid) return;
 
     const user: UserRegistrationRequest = this.registerForm.value;
+
+    error: (err) => {
+      console.log('Errore dal server:', err);
+
+      if (err?.status === 400) {
+        this.errorMessage = 'Compila tutti i campi obbligatori correttamente.';
+        return;
+      }
+      this.loading = false;
+    }
 
     this.authService.register(user, this.selectedImage)
       .subscribe({

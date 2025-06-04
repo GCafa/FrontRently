@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
 import { User } from '../../model/user';
-import { CustomResponse} from "../../model/custom-response";
 import { RouterModule, Router } from '@angular/router';
+import { ChangeRoleResponse } from '../../model/change-role-response';
 
 @Component({
   selector: 'app-admin',
@@ -16,7 +16,7 @@ import { RouterModule, Router } from '@angular/router';
 export class AdminHomeComponent implements OnInit {
   currentUser: User | null = null;
   users: User[] = [];
-  changeRoleRequests: any[] = []; // TODO: definire interfaccia per le richieste
+  changeRoleRequests: ChangeRoleResponse[] = [];
   loading = false;
   showRejectionForm = false;
   rejectionMotivation = '';
@@ -27,6 +27,7 @@ export class AdminHomeComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
     this.loadUsers();
+    this.getAllChangeRoleRequests();
   }
 
   private loadUsers(): void {
@@ -57,7 +58,6 @@ export class AdminHomeComponent implements OnInit {
   }
 
   disableUser(userId: number): void {
-    console.log(`disableUser chiamato con userId: ${userId}`);
     this.adminService.disableUser(userId).subscribe({
       next: () => {
         this.loadUsers();
@@ -66,18 +66,58 @@ export class AdminHomeComponent implements OnInit {
       error: () => this.handleError('Errore durante la disabilitazione dell\'utente')
     });
   }
-  acceptChangeRole(requestId: number): void {
-    this.adminService.acceptChangeRole(requestId).subscribe({
-      next: () => {
-        this.loadUsers();
-        this.showSuccess('Richiesta accettata con successo');
+
+  getAllChangeRoleRequests() {
+    this.adminService.getAllChangeRoleRequests().subscribe({
+      next: (response: any) => {
+        if (Array.isArray(response)) {
+          this.changeRoleRequests = response.map(req => ({
+            ...req,
+            requestid: req.id || req.requestid
+          }));
+          console.log('Richieste caricate:', this.changeRoleRequests);
+        }
+        this.loading = false;
       },
-      error: () => this.handleError('Errore durante l\'accettazione della richiesta')
+      error: (err) => {
+        console.error('Errore API:', err);
+        this.handleError('Errore nel caricamento delle richieste');
+        this.loading = false;
+      }
     });
   }
 
-  showRejectionDialog(requestId: number): void {
-    this.selectedRequestId = requestId;
+  get pendingRequests(): ChangeRoleResponse[] {
+    return this.changeRoleRequests.filter(request =>
+      request && request.status === 'PENDING'
+    );
+  }
+
+  acceptChangeRole(requestid: number): void {
+    if (!requestid) {
+      console.error('ID richiesta non valido:', requestid);
+      return;
+    }
+
+    this.loading = true;
+    this.adminService.acceptChangeRole(requestid).subscribe({
+      next: () => {
+        this.getAllChangeRoleRequests();
+        this.loadUsers();
+        this.showSuccess('Richiesta accettata con successo');
+      },
+      error: (err) => {
+        console.error('Errore accettazione:', err);
+        this.handleError('Errore durante l\'accettazione della richiesta');
+      },
+      complete: () => {
+        this.loading = false;
+      }
+    });
+  }
+
+  showRejectionDialog(requestid: number): void {
+    this.selectedRequestId = requestid;
     this.showRejectionForm = true;
   }
 
@@ -86,12 +126,17 @@ export class AdminHomeComponent implements OnInit {
       return;
     }
 
+    this.loading = true;
     this.adminService.rejectChangeRole(this.selectedRequestId, this.rejectionMotivation).subscribe({
       next: () => {
+        this.getAllChangeRoleRequests();
         this.showSuccess('Richiesta rifiutata con successo');
         this.cancelRejection();
       },
-      error: () => this.handleError('Errore durante il rifiuto della richiesta')
+      error: () => this.handleError('Errore durante il rifiuto della richiesta'),
+      complete: () => {
+        this.loading = false;
+      }
     });
   }
 
@@ -103,14 +148,13 @@ export class AdminHomeComponent implements OnInit {
 
   private showSuccess(message: string): void {
     console.log('Successo:', message);
-    // Implementare la logica per mostrare i messaggi di successo
   }
 
   private handleError(error: string): void {
     console.error('Errore:', error);
-    // Implementare la logica per mostrare gli errori
   }
-  logout() {
+
+  logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     sessionStorage.removeItem('token');

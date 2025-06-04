@@ -71,24 +71,26 @@
             <h2 class="h5 mb-0">Richieste Cambio Ruolo</h2>
         </div>
         <div class="card-body">
-            <div class="list-group" *ngIf="changeRoleRequests.length > 0">
-                <div class="list-group-item" *ngFor="let request of changeRoleRequests">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="mb-1">Richiesta da: {{request.username}}</h6>
-                            <p class="mb-1">Nuovo ruolo: {{request.newRole}}</p>
-                        </div>
-                        <div class="btn-group">
-                            <button class="btn btn-success btn-sm" (click)="acceptChangeRole(request.id)">
-                                Accetta
-                            </button>
-                            <button class="btn btn-danger btn-sm" (click)="showRejectionDialog(request.id)">
-                                Rifiuta
-                            </button>
-                        </div>
-                    </div>
+          <div class="list-group" *ngIf="pendingRequests.length > 0">
+            <div class="list-group-item" *ngFor="let request of pendingRequests">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h6 class="mb-1">Richiesta da: {{request.username}}</h6>
                 </div>
+                <div class="btn-group">
+                  <!-- Usa request.requestid (minuscolo) -->
+                  <button class="btn btn-success btn-sm"
+                          [disabled]="loading"
+                          (click)="acceptChangeRole(request.requestid)">
+                    {{ loading ? 'Caricamento...' : 'Accetta' }}
+                  </button>
+                  <button class="btn btn-danger btn-sm" (click)="showRejectionDialog(request.requestid)">
+                    Rifiuta
+                  </button>
+                </div>
+              </div>
             </div>
+          </div>
 
             <div class="alert alert-info" *ngIf="changeRoleRequests.length === 0">
                 Nessuna richiesta di cambio ruolo pendente

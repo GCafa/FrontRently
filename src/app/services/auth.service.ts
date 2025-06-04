@@ -33,25 +33,32 @@ export class AuthService {
   }
 
   login(credentials: UserLoginRequest): Observable<UserLoginResponse> {
-    return this.http.post<UserLoginResponse>(AuthUrl.login(), credentials)
+    return this.http.post<any>(AuthUrl.login(), credentials)
       .pipe(
         tap(response => {
-          if (response.user && response.user.isActive === false) {
-            throw new Error('Account disabilitato');
+          if (!response?.jwt) {
+            throw new Error('Token JWT mancante nella risposta');
           }
-          if (response.jwt) {
-            localStorage.setItem('token', response.jwt);
-            const payload = this.parseJwt(response.jwt);
-            if (payload?.role) {
-              localStorage.setItem('userRole', payload.role);
-            }
+
+          // Salva il token
+          localStorage.setItem('token', response.jwt);
+
+          // Estrai le info utente dal JWT
+          const payload = this.parseJwt(response.jwt);
+          if (!payload?.role) {
+            throw new Error('Ruolo mancante nel token JWT');
           }
+
+          // Salva il ruolo
+          localStorage.setItem('userRole', payload.role);
+
+          // Costruisci l'oggetto user dai dati del JWT
+          response.user = {
+            isActive: true,
+            role: payload.role
+          };
         }),
-        catchError((error: any) => {
-          if (error.message === 'Account disabilitato') {
-            // Gestisci il messaggio di errore nel componente
-            throw error;
-          }
+        catchError((error: HttpErrorResponse) => {
           console.error('Errore login:', error);
           throw error;
         })
@@ -61,7 +68,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('userRole');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/home']);
   }
 
   getToken(): string | null {

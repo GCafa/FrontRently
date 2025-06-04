@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { UserLoginRequest } from '../../model/user-login-request';
+import { User} from '../../model/user';
 
 
 @Component({
@@ -64,12 +65,12 @@ export class LoginComponent {
 
     this.authService.login(credentials).subscribe({
       next: (res) => {
-        if (res?.user?.isActive === false) {
-          this.setError('Account disabilitato. Contatta l\'amministratore.');
+        if (!res) {
+          this.setError('Risposta non valida dal server');
           return;
         }
 
-        if (res?.jwt) {
+        if (res.jwt) {
           const payload = this.parseJwt(res.jwt);
           if (payload?.role) {
             localStorage.setItem('userRole', payload.role);
@@ -83,15 +84,20 @@ export class LoginComponent {
         this.loading = false;
       },
       error: (err) => {
-        if (err.error?.message?.toLowerCase().includes('disabilitato')) {
+        console.log('Errore dal server:', err);
+
+        if (err?.status === 403) {
           this.setError('Account disabilitato. Contatta l\'amministratore.');
-        } else {
+        } else if (err?.status === 401) {
           this.setError('Credenziali non valide');
+        } else {
+          this.setError('Errore durante l\'accesso');
         }
         this.loading = false;
       }
     });
   }
+
 
   private setError(message: string): void {
     this.errorMessage = message;
