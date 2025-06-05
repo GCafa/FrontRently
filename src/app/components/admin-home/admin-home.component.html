@@ -98,30 +98,38 @@
         </div>
     </div>
 
-    <!-- Modal per rifiuto richiesta -->
-    <div class="modal" [class.show]="showRejectionForm" [style.display]="showRejectionForm ? 'block' : 'none'">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Motivo del rifiuto</h5>
-                    <button type="button" class="btn-close" (click)="cancelRejection()"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="rejectionMotivation" class="form-label">Inserisci la motivazione:</label>
-                        <textarea id="rejectionMotivation" class="form-control" rows="3"
-                                  [(ngModel)]="rejectionMotivation"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" (click)="cancelRejection()">Annulla</button>
-                    <button type="button" class="btn btn-primary" (click)="rejectChangeRole()">Conferma</button>
-                </div>
-            </div>
+  <!-- Modal per rifiuto richiesta -->
+  <div class="modal" [class.show]="showRejectionForm" [style.display]="showRejectionForm ? 'block' : 'none'">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Motivo del rifiuto</h5>
+          <button type="button" class="btn-close" (click)="cancelRejection()"></button>
         </div>
+        <div class="modal-body">
+          <div class="form-group mb-3">
+            <label for="rejectionMotivation" class="form-label">Inserisci la motivazione:</label>
+            <textarea id="rejectionMotivation"
+                      class="form-control"
+                      rows="3"
+                      placeholder="Scrivi qui la motivazione del rifiuto"
+                      [(ngModel)]="rejectionMotivation"></textarea>
+          </div>
+          <div class="alert alert-danger mt-3"
+               role="alert"
+               *ngIf="errorMessage">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            {{ errorMessage }}
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="cancelRejection()">Annulla</button>
+          <button type="button" class="btn btn-primary" (click)="rejectChangeRole()">Conferma</button>
+        </div>
+      </div>
     </div>
-    <div class="modal-backdrop fade show" *ngIf="showRejectionForm"></div>
-
+  </div>
+  <div class="modal-backdrop fade show" *ngIf="showRejectionForm"></div>
   <button class="btn btn-outline-danger px-4" (click)="logout()">
     <i class="bi bi-box-arrow-right"></i> Logout
   </button>

@@ -46,7 +46,13 @@ export class UserModifyComponent implements OnInit {
       error: (err) => {
         this.errorMessage = 'Errore nel caricamento dei dati utente';
         this.loading = false;
-        if (err.status === 405) this.router.navigate(['/login']);
+        if (err.status === 404){
+          this.errorMessage = 'Utente non trovato. Assicurati di essere loggato.';
+        }else if(err.status === 400){
+          this.errorMessage = 'Password già usata. Scegline un\'altra.';
+        }else {
+          this.router.navigate(['/login']);
+        }
       }
     });
   }
@@ -70,6 +76,11 @@ export class UserModifyComponent implements OnInit {
     this.submitted = true;
     if (this.modifyForm.invalid) return;
 
+    // Reset dei messaggi precedenti
+    this.errorMessage = '';
+    this.successMessage = '';
+    this.loading = true;
+
     const formData = new FormData();
     formData.append(
       'UserModifyRequest',
@@ -82,11 +93,27 @@ export class UserModifyComponent implements OnInit {
     // CHIAMA POST su /modify NON PUT su /me!
     this.userService.updateUser(formData).subscribe({
       next: (resp: CustomResponse) => {
-        this.successMessage = 'Profilo aggiornato con successo!';
-        setTimeout(() => this.router.navigate(['/personal-area']), 1200);
+        this.successMessage = 'Profilo aggiornato con successo! Verrai reindirizzato alla pagina di login.';
+        this.loading = false;
+        setTimeout(() => this.router.navigate(['/login']), 1200);
       },
-      error: () => {
-        this.errorMessage = "Errore durante l'aggiornamento del profilo.";
+      error: (err) => {
+        this.loading = false;
+        console.log('Errore aggiornamento utente:', err);
+
+
+        if (err.status === 400) {
+          this.errorMessage = 'Password errata';
+        } else if (err.status === 401) {
+          this.errorMessage = 'Sessione scaduta. Effettua nuovamente il login.';
+          setTimeout(() => this.router.navigate(['/login']), 1200);
+        } else if (err.status === 403) {
+          this.errorMessage = 'Non hai i permessi necessari per questa operazione.';
+        } else if (err.status === 404) {
+          this.errorMessage = 'Utente non trovato.';
+        } else {
+          this.errorMessage = err.error?.message || 'Errore durante l\'aggiornamento del profilo.';
+        }
       }
     });
   }
@@ -97,3 +124,4 @@ export class UserModifyComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 }
+

@@ -52,7 +52,9 @@ export class ChangePasswordComponent {
             this.errorMessage = error.error?.message || 'I dati inseriti non sono validi';
           } else if (error.status === 401) {
             this.errorMessage = 'Password attuale non corretta';
-          } else {
+          } else if( error.status === 404) {
+            this.errorMessage = 'Utente non trovato. Assicurati di essere loggato.';
+          }else{
             this.errorMessage = 'Si è verificato un errore durante il cambio password';
           }
         }
@@ -101,3 +103,4 @@ export class ChangePasswordComponent {
     this.router.navigate(['/personal-area']);
   }
 }
+

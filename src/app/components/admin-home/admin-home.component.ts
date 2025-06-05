@@ -19,7 +19,8 @@ export class AdminHomeComponent implements OnInit {
   changeRoleRequests: ChangeRoleResponse[] = [];
   loading = false;
   showRejectionForm = false;
-  rejectionMotivation = '';
+  rejectionMotivation: string = '';
+  errorMessage: string = '';
   selectedRequestId: number | null = null;
 
   constructor(private adminService: AdminService, private router: Router) { }
@@ -116,13 +117,22 @@ export class AdminHomeComponent implements OnInit {
     });
   }
 
-  showRejectionDialog(requestid: number): void {
-    this.selectedRequestId = requestid;
+  showRejectionDialog(requestId: number): void {
+    this.selectedRequestId = requestId;
+    this.rejectionMotivation = '';  // resetta la motivazione
     this.showRejectionForm = true;
   }
 
   rejectChangeRole(): void {
+    console.log('Validation check:', {
+      selectedRequestId: this.selectedRequestId,
+      rejectionMotivation: this.rejectionMotivation,
+      errorMessage: this.errorMessage
+    });
+
     if (!this.selectedRequestId || !this.rejectionMotivation.trim()) {
+      this.errorMessage = 'Devi inserire una motivazione per rifiutare la richiesta';
+      console.log('Error set:', this.errorMessage);
       return;
     }
 
@@ -144,6 +154,7 @@ export class AdminHomeComponent implements OnInit {
     this.showRejectionForm = false;
     this.selectedRequestId = null;
     this.rejectionMotivation = '';
+    this.errorMessage = '';
   }
 
   private showSuccess(message: string): void {

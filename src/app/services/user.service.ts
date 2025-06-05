@@ -44,6 +44,13 @@ export class UserService {
     );
   }
 
+  rechargeBalance(username: string, amount: number): Observable<any> {
+    return this.http.post(
+      'http://localhost:8080/api/v1/client/recharge-balance',
+      { username, amount },
+      { headers: this.getAuthHeaders() }
+    );
+  }
 
   /**
    * Estrae il ruolo dal token JWT salvato in localStorage o sessionStorage.
