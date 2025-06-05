@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { catchError, map, Observable, of, tap, throwError } from 'rxjs';
 import { AuthUrl } from '../url/auth.url';
 import { UserLoginResponse } from '../model/user-login-response';
 import { UserPasswordChangeRequest } from '../model/user-password-change-request';
@@ -27,7 +27,7 @@ export class AuthService {
     return this.http.post<{message: string}>(AuthUrl.register(), formData).pipe(
       catchError((err: HttpErrorResponse) => {
         console.error('Errore registrazione:', err);
-        return of(false);
+        return throwError(() => err);
       })
     );
   }

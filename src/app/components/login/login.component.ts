@@ -41,7 +41,7 @@ export class LoginComponent {
   private initForm(): void {
     this.loginForm = this.fb.group({
       usernameOrEmail: ['', [Validators.required, Validators.minLength(3)]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
 
@@ -88,10 +88,12 @@ export class LoginComponent {
 
         if (err?.status === 403) {
           this.setError('Account disabilitato. Contatta l\'amministratore.');
-        } else if (err?.status === 401) {
-          this.setError('Credenziali non valide');
-        } else {
-          this.setError('Errore durante l\'accesso');
+        } else if (err?.status === 400) {
+          this.setError('Lo username o la password non sono corretti');  // Messaggio modificato qui
+        } else if(err?.status === 404) {
+          this.setError('Questo account non esiste');
+        } else{
+          this.setError(err.error?.message || 'Errore di login');
         }
         this.loading = false;
       }

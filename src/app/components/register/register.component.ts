@@ -46,7 +46,6 @@ export class RegisterComponent {
   }
 
 
-
   togglePassword(): void {
     this.showPassword = !this.showPassword;
   }
@@ -55,6 +54,7 @@ export class RegisterComponent {
     const file = event.target.files[0];
     if (file) this.selectedImage = file;
   }
+
   // Dentro RegisterComponent
 
   passwordsMatch(): boolean {
@@ -69,33 +69,28 @@ export class RegisterComponent {
       this.errorMessage = 'Le password non coincidono';
       return;
     }
-    this.submitted = true;
-    if (this.registerForm.invalid) return;
 
     const user: UserRegistrationRequest = this.registerForm.value;
 
-    error: (err) => {
-      console.log('Errore dal server:', err);
-
-      if (err?.status === 400) {
-        this.errorMessage = 'Compila tutti i campi obbligatori correttamente.';
-        return;
-      }
-      this.loading = false;
-    }
-
+    this.loading = true;
     this.authService.register(user, this.selectedImage)
       .subscribe({
         next: (res) => {
           this.successMessage = 'Registrazione avvenuta con successo!';
           this.errorMessage = '';
+          this.loading = false;
           setTimeout(() => this.router.navigate(['/login']), 2000);
         },
         error: (err) => {
-          this.errorMessage = err.error?.message || 'Errore di registrazione';
+          if (err?.status === 400) {
+            this.errorMessage = 'Lo Username o l\'Email sono già in uso';
+          } else {
+            this.errorMessage = err.error?.message || 'Errore di registrazione';
+          }
           this.successMessage = '';
-          setTimeout(() => this.router.navigate(['/login']), 2000);
+          this.loading = false;
         }
       });
   }
 }
+
