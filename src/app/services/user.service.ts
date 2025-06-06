@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {CustomResponse} from '../model/custom-response';
+import { CustomResponse } from '../model/custom-response';
 import { User } from '../model/user';
-import{UserPasswordChangeRequest} from '../model/user-password-change-request';
-import{ ChangeRoleRequest } from '../model/change-role-request';
+import { UserPasswordChangeRequest } from '../model/user-password-change-request';
+import { ChangeRoleRequest } from '../model/change-role-request';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -44,39 +44,52 @@ export class UserService {
     );
   }
 
-  rechargeBalance(username: string, amount: number): Observable<any> {
-    return this.http.post(
-      'http://localhost:8080/api/v1/client/recharge-balance',
-      { username, amount },
-      { headers: this.getAuthHeaders() }
-    );
+  rechargeBalance(amount: number): Observable<any> {
+    let requestParams = new HttpParams()
+      .set('username', this.getUsername() || '')
+      .set('amount', amount.toString());
+
+    return this.http.post(`${this.apiUrl}/recharge-balance`, null, {
+      headers: this.getAuthHeaders(),
+      params: requestParams
+    });
   }
 
-  /**
-   * Estrae il ruolo dal token JWT salvato in localStorage o sessionStorage.
-   * Restituisce una stringa come 'USER', 'HOST', 'ADMIN' oppure null se non trovato.
-   */
-  getRoleFromJWT(): string | null {
+
+
+  private decodeJWT(): any {
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     if (!token) return null;
 
     const payload = token.split('.')[1];
     if (!payload) return null;
-    // Decodifica base64url
+
     const base64 = payload.replace(/-/g, '+').replace(/_/g, '/');
     const padded = base64.padEnd(base64.length + (4 - base64.length % 4) % 4, '=');
 
     try {
       const decodedPayload = atob(padded);
-      const obj = JSON.parse(decodedPayload);
-      return obj.role || (Array.isArray(obj.roles) ? obj.roles[0] : null) || null;
+      return JSON.parse(decodedPayload);
     } catch (e) {
       return null;
     }
   }
 
+  getUsername(): string | null {
+    const decoded = this.decodeJWT();
+    return decoded?.sub || null;
+  }
+
+  getRoleFromJWT(): string | null {
+    const decoded = this.decodeJWT();
+    return decoded?.role || (Array.isArray(decoded?.roles) ? decoded.roles[0] : null);
+  }
+
   private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-    return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
   }
 }

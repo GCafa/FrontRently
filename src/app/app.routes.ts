@@ -10,6 +10,7 @@ import { UserHomeComponent } from './components/user-home/user-home.component';
 import {ChangePasswordComponent} from './components/change-password/change-password.component';
 import {AdminHomeComponent} from './components/admin-home/admin-home.component';
 import {ChangeRoleComponent} from './components/change-role/change-role.component';
+import {RechargeBalanceComponent} from './components/recharge-balance/recharge-balance.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -21,6 +22,7 @@ export const routes: Routes = [
   { path: 'user-home', component: UserHomeComponent },
   { path: 'admin-home', component: AdminHomeComponent},
   { path: 'change-role', component: ChangeRoleComponent },
+  { path: 'recharge-balance', component: RechargeBalanceComponent },
   {
     path: '',
     redirectTo: 'home',
