@@ -4,7 +4,7 @@
       <div class="card personal-area-glass animate__animated animate__fadeInDown">
         <div class="card-body p-5">
           <div class="avatar-circle mb-3">
-            <img [src]="user?.imageUrl"
+            <img [src]=" 'http://localhost:8080/images/'+ user?.imageUrl"
                  (error)="onImageError()"
                  alt="Foto profilo"
                  class="profile-image"

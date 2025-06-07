@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { User } from '../../model/user';
 import { RouterModule, Router } from '@angular/router';
+import {baseUrl} from '../../url/base.url';
 
 @Component({
   selector: 'app-personal-area',
@@ -26,6 +27,7 @@ export class PersonalAreaComponent implements OnInit {
     this.userService.getCurrentUser().subscribe({
       next: (user) => {
         this.user = user;
+        console.log(this.user.imageUrl);
         this.loading = false;
       },
       error: (err) => {
@@ -57,4 +59,6 @@ export class PersonalAreaComponent implements OnInit {
   requestChangeRole() {
 
   }
+
+  protected readonly baseUrl = baseUrl;
 }

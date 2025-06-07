@@ -55,8 +55,6 @@ export class UserService {
     });
   }
 
-
-
   private decodeJWT(): any {
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     if (!token) return null;

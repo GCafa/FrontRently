@@ -11,18 +11,19 @@ import {ChangePasswordComponent} from './components/change-password/change-passw
 import {AdminHomeComponent} from './components/admin-home/admin-home.component';
 import {ChangeRoleComponent} from './components/change-role/change-role.component';
 import {RechargeBalanceComponent} from './components/recharge-balance/recharge-balance.component';
+import { adminGuard, authGuard} from './guard/auth.guard';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'change-password', component: ChangePasswordComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'register', component: RegisterComponent,},
   { path: 'login', component: LoginComponent },
   { path: 'chi-siamo', component: ChiSiamoComponent },
-  { path: 'user-modify', component: UserModifyComponent },
-  { path: 'user-home', component: UserHomeComponent },
-  { path: 'admin-home', component: AdminHomeComponent},
-  { path: 'change-role', component: ChangeRoleComponent },
-  { path: 'recharge-balance', component: RechargeBalanceComponent },
+  { path: 'user-modify', component: UserModifyComponent, },
+  { path: 'user-home', component: UserHomeComponent, canActivate: [ authGuard]},
+  { path: 'admin-home', component: AdminHomeComponent, canActivate: [adminGuard]},
+  { path: 'change-role', component: ChangeRoleComponent,  },
+  { path: 'recharge-balance', component: RechargeBalanceComponent,  },
   {
     path: '',
     redirectTo: 'home',
